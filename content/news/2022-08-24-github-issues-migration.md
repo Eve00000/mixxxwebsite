@@ -68,8 +68,8 @@ made this migration feasible in the first place.
 Due to the big number of bugs and the flood of related notifications, I have
 noticed quickly that the script will likely hit various rate limits and spam
 protection facilities.  
-After [getting in contact with GitHub via
-Twitter](https://twitter.com/mixxxdj/status/1546544041038422019) they assembled
+After getting in contact with GitHub via
+Twitter they assembled
 a team of engineers and FOSS experts to help us evaluate possible solutions.
 Thanks to them, we were able to avoid email spam and reduce the time the import
 took by two orders of magnitude.

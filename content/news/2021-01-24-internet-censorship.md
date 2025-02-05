@@ -23,7 +23,7 @@ This resistance from the public has been causing anxiety in State House, and it�
 
 In the 2016 presidential elections, Ugandan authorities blocked access to Facebook, Twitter and WhatsApp saying the platforms would be used by the opposition to mobilize protests.
 ([This article from the BBC](https://www.bbc.com/news/world-africa-35601220) has more context on the social media blockage)
-President Yoweri Museveni was facing a tough challenge from veteran activist [Kizza Besigye](https://twitter.com/kizzabesigye1?s=20), and he believed shutting down social media would help to curb the “threat”.
+President Yoweri Museveni was facing a tough challenge from veteran activist Kizza Besigye, and he believed shutting down social media would help to curb the “threat”.
 Authorities also suspended mobile transfers of money.
 
 In 2019, the government introduced a tax on the use of the social media, which activists have called an attempt at controlling free speech.
@@ -41,7 +41,7 @@ A few days after the social media block, the government decided to shut down the
 So when Google stopped working and our parents were restarting their phones several times, is when we realized that truly, there was no end to the surprises.
 
 During this (not so brief) period we were in total blackout. No internet services were available anywhere.
-I was not doing any work as far as the [Outreachy](https://twitter.com/outreachy) internship with [Mixxx](https://mixxx.org/) goes.
+I was not doing any work as far as the Outreachy internship with [Mixxx](https://mixxx.org/) goes.
 I was not making any contributions, and sadly, that whole week went just like that.
 We (devs) wondered if there was a backdoor to the whole situation, maybe some independent internet Service Provider that didn’t serve the government or something – lol.
 I was not sure what to do without the internet so I read books, watched movies on CD, took nature walks, anything to pass the time. How did our forefathers survive without the internet ?
@@ -71,7 +71,7 @@ I was working one day when I encountered this error while trying to access GitHu
 I thought that was odd, considering I’ve always accessed GitHub with no difficulty.
 I didn’t think much of it. I thought that as long I could run commands in the git command line, I would be okay.
 
-While I was wrapping my head around the whole situation, [Gus](https://twitter.com/0xggus) from the [Tor Project](https://twitter.com/torproject) asked if I would volunteer to run a simple test
+While I was wrapping my head around the whole situation, Gus from the [Tor Project](https://www.torproject.org/) asked if I would volunteer to run a simple test
 (See [the Emma repository on Github](https://github.com/NullHypothesis/emma)  for them to see if Tor Bridges were working. I said yeah! Sure!
 Anything to bypass the next internet shut down.
 So I had to access the repository for [Emma (a lightweight censorship analyzer)](https://gitlab.torproject.org/tpo/anti-censorship/emma) on GitLab, but to my dismay, I could not access GitLab.

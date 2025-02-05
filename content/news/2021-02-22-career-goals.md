@@ -38,7 +38,7 @@ Around the same period, I had the honour of participating in the [#BuildforSDGs 
 The [#BuildforSDGs](https://buildforsdg.andela.com) program is committed to helping empower people to build real-world, locally and relevant solutions focused on the [Sustainable Development Goals](https://www.undp.org/content/undp/en/home/sustainable-development-goals.html) (SDGs) while gaining skills needed to advance in one’s career.
 I got to collaborate with really talented developers from all over Africa and received priceless mentorship from the experts at [Andela](https://andela.com) and [Facebook](https://www.facebook.com).
 
-Shortly after, towards the end of the program, I started applying for the [Outreachy FOSS internship](https://twitter.com/outreachy), and this where I am now.
+Shortly after, towards the end of the program, I started applying for the Outreachy FOSS internship, and this where I am now.
 
 #### The skills that I have learned through working for Mixxx
 
@@ -106,7 +106,7 @@ I love that the collaborative process in open source usually incorporates altern
 
 One of the things about contributing to open-source programs remotely is that no one will be physically around to push you to do anything or get work done.
 The process is, for the most part, self-paced and I believe it takes a certain level of organization to make valuable contributions to a project.
-Throughout the [Outreachy internship](https://twitter.com/outreachy) working with [Mixxx](https://mixxx.org), I have kept myself organized, assigning myself tasks daily and managing my time effectively.
+Throughout the Outreachy internship working with [Mixxx](https://mixxx.org), I have kept myself organized, assigning myself tasks daily and managing my time effectively.
 I try to take my organization beyond just doing what I’m assigned but taking the initiative to find out what needs to be done and then doing it.
 
 *Long term thinker*
@@ -140,4 +140,4 @@ I believe that this background provides me with a unique perspective on certain 
 
 In five years’, time, I hope to be an exceptional software developer who has imparted the skills that she has learned to other younger people aiming to get into the field.
 I hope to have empowered other people who wish to join this industry by teaching them what I know and exposing them to opportunities that will help them progress in their career, like I’ve had.
-I hope to have scored a more permanent job doing the things that I love and effecting change in other people’s lives, one way or another, and I’m grateful to [Mixxx](https://mixxx.org) and [Outreachy](https://twitter.com/outreachy) for launching my career in the right direction.
+I hope to have scored a more permanent job doing the things that I love and effecting change in other people’s lives, one way or another, and I’m grateful to [Mixxx](https://mixxx.org) and Outreachy for launching my career in the right direction.

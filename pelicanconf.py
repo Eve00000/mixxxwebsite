@@ -169,7 +169,6 @@ AUTHOR_METADATA = {
     "Mixxx Team": {
         "github": "mixxxdj",
         "mastodon": "@mixxx@floss.social",
-        "twitter": "mixxxdj",
         "facebook": "mixxxdj",
         "email": "core-team@mixxx.org",
         "tagline": "Mixxx DJ Software Development Team",

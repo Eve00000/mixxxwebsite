@@ -40,12 +40,6 @@ def update_author(article_generator, author):
     author.github_url = (
         "https://github.com/{}".format(author.github) if author.github else ""
     )
-    author.twitter = author_dict.get("twitter")
-    author.twitter_url = (
-        "https://twitter.com/{}/".format(author.twitter)
-        if author.twitter
-        else ""
-    )
     author.email = author_dict.get("email")
 
     author.avatar_url = None
