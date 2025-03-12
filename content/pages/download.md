@@ -61,6 +61,10 @@ versions:
           To run the Flatpak:
 
               flatpak run org.mixxx.Mixxx
+
+          **Note:** When migrating from a distribution package or Mixxx built from source code, Mixxx Flatpak will not automatically recover your previous settings and database. Please refer to the [instructions in the manual](https://manual.mixxx.org/latest/chapters/advanced_topics#migrate-your-mixxx-library-and-settings-to-flatpak).
+
+          If you encounter issues with file or device permissions, please refer to the [Mixxx Flatpak repository](https://github.com/flathub/org.mixxx.Mixxx/issuesffltp) first.
       - slug: source
         name: Source Code
         icon: terminal.svg
