@@ -2,7 +2,7 @@ title: Demand for cooperation in an AI-Research Project
 authors: Evelynne Veys
 tags: AI, cooperation research project.
 comments: yes
-status: draft
+date: 2025-04-01 01:12:32
 
 #### Mixxx has been asked to cooperate in an AI-Research Project 'Observe & Serve the Audience'.
 
