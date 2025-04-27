@@ -3,9 +3,9 @@ title: Download
 template: pages/download
 versions:
   stable:
-    name: 2.5.0
-    release_announcement: /news/2024-12-24-mixxx-2_5-released/
-    download_manifest: https://downloads.mixxx.org/releases/2.5.0/manifest.json
+    name: 2.5.1
+    release_announcement: /news/2025-04-27-mixxx-2_5_1-released/
+    download_manifest: https://downloads.mixxx.org/releases/2.5.1/manifest.json
     downloads:
       - slug: windows
         os: Windows 10 build 1809 or later
@@ -15,7 +15,7 @@ versions:
       - slug: macos
         os: macOS 11 or later
         text: |
-          Download Mixxx 2.5.0 for macOS 11 or later for Intel or ARM (Apple Silicon M1/M2/M3). You can check which version you need by clicking the Apple logo in the menu bar, then "About this Mac". If the window displays an "Apple M..." chip, download the ARM build, otherwise you need the Intel build.
+          Download Mixxx 2.5.1 for macOS 11 or later for Intel or ARM (Apple Silicon M1/M2/M3). You can check which version you need by clicking the Apple logo in the menu bar, then "About this Mac". If the window displays an "Apple M..." chip, download the ARM build, otherwise you need the Intel build.
         packages:
         - slug: macosintel
           name: Intel
@@ -71,7 +71,7 @@ versions:
 
               git clone -b 2.5 https://github.com/mixxxdj/mixxx.git
 
-          The 2.5.0 release has been [tagged](https://github.com/mixxxdj/mixxx/releases/tag/2.5.0) with `2.5.0`.
+          The 2.5.1 release has been [tagged](https://github.com/mixxxdj/mixxx/releases/tag/2.5.1) with `2.5.1`.
 
           Compilation instructions are available for [Windows](https://github.com/mixxxdj/mixxx/wiki/Compiling-On-Windows), [macOS](https://github.com/mixxxdj/mixxx/wiki/Compiling-on-macOS), and [Linux](https://github.com/mixxxdj/mixxx/wiki/Compiling-On-Linux).
         packages:
@@ -79,8 +79,8 @@ versions:
           name: 2.5 branch
           file_url: https://github.com/mixxxdj/mixxx/archive/2.5.zip
         - slug: source
-          name: 2.5.0 release
-          file_url: https://github.com/mixxxdj/mixxx/archive/2.5.0.tar.gz
+          name: 2.5.1 release
+          file_url: https://github.com/mixxxdj/mixxx/archive/2.5.1.tar.gz
   testing:
     name: 2.6-alpha
     title: Development Snapshots
