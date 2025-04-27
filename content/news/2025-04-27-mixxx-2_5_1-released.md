@@ -2,7 +2,7 @@ title: Mixxx 2.5.1 Released
 authors: Evelynne Veys
 tags: 2.5.1, release announcement
 comments: yes
-status: draft
+date: 2025-04-27 12:43:25
 
 #### Mixxx 2.5.1 Release Announcement
 
