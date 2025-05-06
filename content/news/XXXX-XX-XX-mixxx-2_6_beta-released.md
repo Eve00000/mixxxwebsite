@@ -161,17 +161,16 @@ Find more info about Stems in Mixxx in [Antoine Colombier's GSoC Article](https:
 #### CUES CUES CUES
 
 What if you wanted to add an extra cue, that logically should be between the 2nd and 3rd cue you created? In 2.6 beta this problem is solved. You can move a cue to another pôsition without the need to re-create the cue. It's also possible to rearrange all cues according to their position in the track.
+
+
+![Drop a hotcue on another position]({static}/images/news/Mixxx_2_6_beta_drop_hotcue_on_other_position.gif)
+
+You can also use a menu action to re-order the hot cues on their position in the track.
+
+
+![Drop a hotcue on another position]({static}/images/news/Mixxx_2_6_beta_menu_reorder_hotcues.gif)
+
 Before cues played as long as you pressed them, to continue the playing you needed to press the play button. That's solved too: press the cue, drag & drop it on the play button and ... tada the track keeps playing.
-
-HERE COMES THE CUES VIDEO
-
-
-#### Other new flashy features
-
-Coming up, don't push me, the post isn't ready yet.
-
-
-Enjoy Mixxx
 
 
 #### 2.6 beta Changelog
