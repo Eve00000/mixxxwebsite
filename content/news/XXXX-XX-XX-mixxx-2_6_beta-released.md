@@ -26,10 +26,6 @@ To see the original text each Channel needs to be un-muted and without effect.
 
 <div class="stemdemo">
   <style>
-    body {
-      font-family: Raleway;
-      padding: 20px;
-    }
     .channel {
       margin-bottom: 10px;
     }
@@ -146,7 +142,7 @@ At the moment you need to create the STEM-Tracks with 3rd party tools, but once 
 - remix a track: set the volume of the Drums on 100%, the bass on 90%, the other on 50% and the vocals on 60%
 - add effects to the vocal only: set the volume of all stems to a value of your choice + add reverb effect only to the vocals.
 
-Mixxx wouldn't be Mixxx if these controls weren't available for your controller, so they arthis.
+Mixxx wouldn't be Mixxx if these controls weren't available for your controller, so they are.
 To control the Stems you need for each channel, depending on your choice
 - 4 buttons if you want to use the 'mute' functions
 - 4 encoders to control the Volume
@@ -160,18 +156,17 @@ Find more info about Stems in Mixxx in [Antoine Colombier's GSoC Article](https:
 
 #### CUES CUES CUES
 
-What if you wanted to add an extra cue, that logically should be between the 2nd and 3rd cue you created? In 2.6 beta this problem is solved. You can move a cue to another pôsition without the need to re-create the cue. It's also possible to rearrange all cues according to their position in the track.
+What if you wanted to add an extra cue, that logically should be between the 2nd and 3rd cue you created? In 2.6 beta this problem is solved. You can move a cue to another position without the need to re-create the cue. It's also possible to rearrange all cues according to their position in the track.
 
 
 ![Drop a hotcue on another position]({static}/images/news/Mixxx_2_6_beta_drop_hotcue_on_other_position.gif)
 
-You can also use a menu action to re-order the hot cues on their position in the track.
+You can also use a menu action to re-order the hot cues according to their position in the track.
 
 
 ![Drop a hotcue on another position]({static}/images/news/Mixxx_2_6_beta_menu_reorder_hotcues.gif)
 
-Before cues played as long as you pressed them, to continue the playing you needed to press the play button. That's solved too: press the cue, drag & drop it on the play button and ... tada the track keeps playing.
-
+Before, cues played as long as you pressed them, to continue the playing you needed to press the play button. That's now possible with only a mouse: click and hold the cue, drag & drop it on the play button and ... tada, the track keeps playing.
 
 #### 2.6 beta Changelog
 The complete changelog can be found [here](https://github.com/mixxxdj/mixxx/blob/2.6-beta/CHANGELOG.md)
