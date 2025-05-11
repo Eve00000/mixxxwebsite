@@ -2,7 +2,7 @@ title: Mixxx 2.6 beta Released
 authors: Evelynne Veys
 tags: 2.6 beta, release announcement start  CI
 comments: yes
-status: draft
+date: 2025-05-11 22:17:07
 
 #### Mixxx 2.6 beta Release Announcement
 
