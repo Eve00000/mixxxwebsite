@@ -108,7 +108,7 @@ versions:
         - slug: macosarm
           name: ARM
       - slug: ubuntu
-        os: Ubuntu 22.04 "Jammy Jellyfish" or later
+        os: Ubuntu 24.04 "Noble Numbat" or later
         text: |
           We provide a [PPA on Launchpad](https://launchpad.net/~mixxx/+archive/ubuntu/mixxxbetas) to make installing the latest development snapshot of Mixxx as easy as possible.
           Open a terminal, and enter:
@@ -156,7 +156,7 @@ versions:
         - slug: macosarm
           name: ARM
       - slug: ubuntu
-        os: Ubuntu 22.04 "Jammy Jellyfish" or later
+        os: Ubuntu 24.04 "Noble Numbat" or later
         text: |
           We provide a [PPA on Launchpad](https://launchpad.net/~mixxx/+archive/ubuntu/nightlies) to make installing the latest development snapshot of Mixxx as easy as possible.
           Open a terminal, and enter:
