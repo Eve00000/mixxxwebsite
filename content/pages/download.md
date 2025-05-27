@@ -100,6 +100,8 @@ versions:
         packages:
           - slug: win64
             name: 64-Bit
+          - slug: winarm
+            name: ARM
       - slug: macos
         os: macOS 11 or later
         packages:
