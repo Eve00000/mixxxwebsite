@@ -99,9 +99,9 @@ versions:
         os: Windows 10 build 1809 or later
         packages:
           - slug: win64
-            name: 64-Bit
+            name: x64
           - slug: winarm
-            name: ARM
+            name: ARM64
       - slug: macos
         os: macOS 11 or later
         packages:
