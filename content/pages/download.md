@@ -3,9 +3,9 @@ title: Download
 template: pages/download
 versions:
   stable:
-    name: 2.5.1
+    name: 2.5.2
     release_announcement: /news/2025-04-27-mixxx-2_5_1-released/
-    download_manifest: https://downloads.mixxx.org/releases/2.5.1/manifest.json
+    download_manifest: https://downloads.mixxx.org/releases/2.5.2/manifest.json
     downloads:
       - slug: windows
         os: Windows 10 build 1809 or later
@@ -73,7 +73,7 @@ versions:
 
               git clone -b 2.5 https://github.com/mixxxdj/mixxx.git
 
-          The 2.5.1 release has been [tagged](https://github.com/mixxxdj/mixxx/releases/tag/2.5.1) with `2.5.1`.
+          The 2.5.2 release has been [tagged](https://github.com/mixxxdj/mixxx/releases/tag/2.5.2) with `2.5.2`.
 
           Compilation instructions are available for [Windows](https://github.com/mixxxdj/mixxx/wiki/Compiling-On-Windows), [macOS](https://github.com/mixxxdj/mixxx/wiki/Compiling-on-macOS), and [Linux](https://github.com/mixxxdj/mixxx/wiki/Compiling-On-Linux).
         packages:
@@ -81,8 +81,8 @@ versions:
           name: 2.5 branch
           file_url: https://github.com/mixxxdj/mixxx/archive/2.5.zip
         - slug: source
-          name: 2.5.1 release
-          file_url: https://github.com/mixxxdj/mixxx/archive/2.5.1.tar.gz  
+          name: 2.5.2 release
+          file_url: https://github.com/mixxxdj/mixxx/archive/2.5.2.tar.gz  
   beta:
     name: 2.6-beta
     release_announcement: /news/2025-05-11-mixxx-2_6_beta-released
