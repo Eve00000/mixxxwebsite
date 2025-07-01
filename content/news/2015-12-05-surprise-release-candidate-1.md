@@ -46,7 +46,7 @@ Please help us out!<br />
 <b>Help Translate Mixxx</b>
 <br />
 In order to make this release rock in every language we need your help with translations! This is the first release we are offering translations of the Mixxx manual in addition to the app itself. We are currently in dire need of translations for Spanish, Chinese and Japanese (among many other languages).<br />
-Check out our&nbsp;<a href="https://www.transifex.com/mixxx-dj-software/" target="_blank">Transifex page</a>
+Check out our&nbsp;<a href="https://explore.transifex.com/mixxx-dj-software/" target="_blank">Transifex page</a>
 &nbsp;and&nbsp;<a href="https://github.com/mixxxdj/mixxx/wiki/internationalization" target="_blank">internationalization wiki</a>
 &nbsp;for details on how to get started.</div>
 <div><br />
