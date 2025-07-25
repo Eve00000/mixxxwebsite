@@ -298,6 +298,10 @@ AUTHOR_METADATA = {
         "email": "g73o82d65n79@protonmail.ch",
         "tagline": "GSoC 2025 Contributor",
     },
+    "Jan Claußen": {
+        "github": "jclsn",
+        "tagline": "Mixxx Contributor",
+    },
 }
 
 # Needed for Jinja2 markdown filter
