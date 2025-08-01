@@ -282,6 +282,7 @@ AUTHOR_METADATA = {
     },
     "Antoine Colombier": {
         "github": "acolombier",
+        "discourse": "acolombier",
         "email": "mixxx@acolombier.dev",
         "tagline": "Mixxx Core Developer",
     },
