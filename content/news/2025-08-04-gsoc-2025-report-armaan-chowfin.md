@@ -1,8 +1,8 @@
 title: GSoC 2025 Work Product - Resampling Options for Mixxx
 authors: Armaan Chowfin
-status: draft
 tags: gsoc, gsoc-2025
 comments: yes
+date: 2025-08-04 17:42:53
 
 This GSOC project is derived from [Mixxx issue#9328](https://github.com/mixxxdj/mixxx/issues/9328). The goal is to determine whether alternative interpolation algorithms result in a *noticeable reduction in scratching artifacts or a latency improvement over linear interpolation*, **providing quantitative supporting evidence** where possible.
 
