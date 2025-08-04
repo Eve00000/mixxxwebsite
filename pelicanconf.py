@@ -19,7 +19,7 @@ ARTICLE_PATHS = [
     "news",
 ]
 
-STATIC_PATHS = ["images", "_redirects", ".well-known"]
+STATIC_PATHS = ["audio", "images", "_redirects", ".well-known"]
 
 MARKDOWN = {
     "extension_configs": {
