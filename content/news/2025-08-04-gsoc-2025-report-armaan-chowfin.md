@@ -163,7 +163,7 @@ Users can now pick custom samplerates for both recording and broadcasting, indep
 
 ---
 
-[PR#15005](https://github.com/mixxxdj/mixxx/pull/15005): Support for low-latency scratching using the libsamplerate callback API
+**[mixxxPR#15005](https://github.com/mixxxdj/mixxx/pull/15005): Support for low-latency scratching using the libsamplerate callback API**
 
 This PR implements a resampler class using the libsamplerate Callback API. We observed a reduction in per-buffer resampling latency from 20us to 10us - a 2x improvement over the handcrafted linear interpolator.
 
