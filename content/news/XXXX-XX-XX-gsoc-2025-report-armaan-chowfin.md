@@ -4,80 +4,185 @@ status: draft
 tags: gsoc, gsoc-2025
 comments: yes
 
-## Project Description
-This GSOC project is derived from [Mixxx issue#9328](https://github.com/mixxxdj/mixxx/issues/9328)
-> Mixxx uses a linear resample when scratching. This is blazing fast, but the sound can be improved. Here Mixxx should provide more resample options. This project involves to review the already used resample libraries RubberBand and Soundtouch and compare them with other candidates. The one with the best Sound/CPU load trade of shall be selected. Make sure that it supports on the fly changing of the sample rate without artefacts. This project may also involve to contribute a missing feature to such library.
+This GSOC project is derived from [Mixxx issue#9328](https://github.com/mixxxdj/mixxx/issues/9328). The goal is to determine whether alternative interpolation algorithms result in a *noticeable reduction in scratching artifacts or a latency improvement over linear interpolation*, **providing quantitative supporting evidence** where possible.
 
-### Introduction
-Mixxx offers the ability to emulate vinyl scratching when records are stored digitally. Here, a MIDI controller's jog wheels can be spun to emulate the motion of the turntable stylus during scratching. The action of scratching causes a sudden acceleration or deceleration in tempo of the loaded record(s). 
+#### Introduction
+On a turntable, scratching is performed by moving the stylus by hand - causing it to follow grooves in the vinyl that correspond to the analog audio waveform. Mixxx offers the ability to emulate vinyl scratching on digital records, by spinning the jog wheels of a MIDI controller to emulate the motion of the turntable stylus during scratching. The action of scratching causes a sudden acceleration or deceleration in tempo of the loaded record(s).
 
-On a turntable, scratching is performed by moving the stylus by hand - causing it to follow grooves in the vinyl that correspond to the analog audio waveform. However, while working with dital audio, faithful emulation of scratching requires a highly accurate and fast implementation of tempo ramping. In particular, Mixxx needs to implement fast and accurate resampling of input audio. Sub-optimal resampling often leads to audible distortions during scratching, particularly underflows. While there is technically also a chance for phase distortion due to incorrect interpolation algorithms, it is far less noticeable.
+Emulation of vinyl scratching requires low latency tempo ramping, which in turn requires resampling. Sub-optimal resampling leads to audible distortions during scratching, particularly underflows. While there is technically also a chance for phase distortion due to incorrect interpolation algorithms, it is far less noticeable.
 
-At present, the Mixxx resampler for scratching uses a fast, handcrafted linear interpolation algorithm. Mixxx also uses the `SoundTouch` and `RubberBand` libraries to perform general audio time-stretching. These libraries implement interpolation algorithms, but their performance is not optimal for fast changing speed and pitch which is the case when scratching. Therefore, my project goal is defined as follows:
-> To determine whether alternative interpolation algorithms result in a *noticable reduction in scratching artifacts or a latency improvement over linear interpolation* and **providing quantitative supporting evidence** in the form of C++ unit tests under varying scratching scenarios.
+At present, the Mixxx resampler for scratching uses a fast, handcrafted linear interpolation algorithm. Mixxx also uses the `SoundTouch` and `RubberBand` libraries to perform general audio time-stretching, but their performance is not optimal for fast changing speed and pitch which is the case when scratching.
 
-Contributing to this project involves fundamental ideas in audio engineering, digital signal processing and realtime programming. To make this report accessible to those who have not worked with audio systems, I provide all necessary theoretical background, before describing my implementation.
+#### Background: Analog and Digital Audio
+Vibrations of the surrounding air in turn cause the human eardrum to vibrate, and generate a continuous electrical signal. In audio-engineering terms, this electrical signal represents "analog audio", and our ear represents a (biological) "audio interface", i.e. a gateway for audio to enter or exit a processing system.
 
-#### Analog and Digital Audio
-Vibrations of the surrounding air in turn cause the human eardrum to vibrate, and generate a continuous electrical signal. In audio-engineering terms, this electrical signal represents "analog audio", and our ear represents a (biological) "audio interface", i.e. a gateway for audio to enter or exit a processing system. The hearing sense is the result of our brain processing analog audio to create the perception of sound.
+In the human ear, each cochlear hair cell is tuned to a specific frequency band and converts local mechanical vibrations into discrete neural spikes, encoding amplitude over time. This results in a time-series of electrical events that the brain interprets as sound.
 
-While an analog signal is represented by its amplitude as continuous function in continuous time, the digital representation of that signal is a finite series of amplitude values generated by noting the value of the analog signal at fixed, discrete time intervals. The process of generating a digital audio representation from an analog signal is termed "sampling", and the length of the time interval is termed the "sample-period (its reciprocal - the "sampling rate" - is more commonly used while describing digital audio). In practice, analog audio from a sound source enters a mic, is converted to a continuous electrical signal, and finally, a component called the "ADC - Analog to Digital Converter" samples the electrical signal at a fixed sampling rate (ex. 44.1KHz, 48Khz, 96Khz, etc.), generating a series of amplitude values, i.e. digital audio. To allow this audio to be widely distributed, the digital audio is encoded to a standard digital format (ex. MP3, WAV, AAC, etc.) using well-known algorithms. This allows sampled audio, i.e. music records to be stored on digital hard-drives. The analog equivalent - vinyl records - skip the sampling stage entirely. Instead, a series of concentric grooves is etched into the disc, "encoding" the continuous change in the amplitude of the analog electrical signal. 
+##### Periodic Sampling and Encoding
+While an analog signal is represented by its amplitude as continuous function in continuous time, the digital representation of that signal is a time series of amplitude values generated by noting the value of the analog signal at fixed, discrete time intervals.
 
-For an audio record to be subsequently played back, there must exist a processing system that understands the original encoding scheme. For vinyl records, we have turntables connected to amplifiers. Moving the stylus along the vinyl grooves generates a continuous electrical signal, which is sent to a speaker. The speaker, being an analog device, responds to the continuous electrical signal by moving its membrane, creating air vibrations that we hear as sound. To playback digital records, however, we need the right software. The standardization of audio formats ensures that any piece of software that adheres to certain conventions can "decode" and play a digital record. This is one key principle behind the audio playback feature of production-grade software such as VLC, Windows Media Player, Apple Music, Spotify, and even Mixxx. A second requirement of this playback chain is the accurate conversion of digital audio to the original analog signal, to drive the speaker membrane. Audio playback software communicates with a digital audio interface that contains a **DAC - Digital to Analog Converter**, which reconstructs the analog signal, and supplies it to the speaker.
+*The process of generating a digital audio representation from an analog signal is termed **sampling***, and the length of the time interval is termed the "sample-period (its reciprocal - the **sampling rate** - is more commonly used while describing digital audio). Mathematically, sampling is represented as multiplying an analog signal with an impluse train in the time-domain.
 
-The accurate reconstruction of an analog signal from a digital record is mathematically guaranteed under certain conditions. The Fourier theorem - a famous mathematical result - states that any analog signal can be represented by the sum of sinusoidal components of varying frequency and amplitude. The set of frequencies and their amplitudes gives the spectrum of the signal. In this model, the Shannon-Nyquist Sampling theorem states that the frequency at which analog audio is sampled (i.e. sampling rate) is twice its highest-resolvable frequency component -the Nyquist frequency. As a consequence, given that the human hearing range is roughly 20Hz-20kHz, the standard sampling rates 44.1Khz, 48Khz and 96Khz, with Nyquist frequencies 22Khz, 24Khz and 48Khz respectively, ensure that a digital record can represent every audible human frequency. The actual signal reconstruction is carried out in DAC hardware by circuits that implement so-called "digital reconstruction filters". These filters perform mathematical transformations to the discrete sample sequence to recreate the original analog signal.
+*Periodic Sampling*
+![periodic sampling]({static}/images/news/mixxx-sampling-analog-digital.jpeg)
 
-#### Sample-Buffers, DAC, ALSA
-Remember: Digital audio is represented by a finite sequence of amplitude values, with each amplitude value stored as a fixed-precision floating point number (Mixxx uses 32-bit floats). These samples are more generally treated as logical *frames* for multichannel audio. An audio frame is an array containing channels copies of the current sample value. There are three fundamental components in the audio playback chain: 
-- Mixxx (user-space audio processing software), 
-- ALSA (kernel subsystem with userspace API), and the 
-- DAC (device with transducer to convert digital to analog audio). 
 
-The Mixxx preferences page allows the user to configure a `Sample Rate (Hz)`, and `Audio Buffer (ms)`. These parameters together influence the quality of output sound.
+In practice, when analog audio from a sound source enters a mic, it is converted to a continuous electrical signal. Finally, a component called the **ADC (Analog to Digital Converter)** records the electrical signal voltage at a fixed sampling rate such as 44.1KHz, 48Khz or 96Khz, to generate a series of amplitude values, i.e. *samples*. Each sample is stored as a fixed-precision floating point number.
+
+The samples are then encoded to a standard digital format (ex. MP3, WAV, AAC, etc.) using well-known algorithms. This allows sampled audio, i.e. music records to be stored on digital hard-drives. The sample sequences are treated as logical *frames* for multichannel audio. An audio frame is an array containing `k` copies of the current sample value, where `k` is the number of output channels (mono:1, stereo:2).
+
+##### Signal Reconstruction and Playback
+For an audio record to be played back, there must exist a processing system that understands the original encoding scheme. For vinyl records, we have turntables connected to amplifiers. Moving the stylus along the vinyl grooves generates a continuous electrical signal, which is sent to a speaker. The speaker, being an analog device, responds to the continuous electrical signal by moving its membrane, creating air vibrations that we hear as sound.
+
+To playback digital records, however, we need the right software. The standardization of audio formats ensures that any piece of software that adheres to certain conventions can "decode" and play a digital record. This is one key principle behind the audio playback feature of production-grade software such as VLC, Windows Media Player, Apple Music, Spotify, and even Mixxx.
+
+A second requirement of this playback chain is the accurate reconstruction of the original analog signal from the sampled digital representation. Audio playback software communicates with a digital audio interface that contains a **DAC (Digital to Analog Converter)**, which reconstructs the analog signal and supplies it to the speaker. DAC hardware circuits implement digital reconstruction filters. These filters perform mathematical transformations to the discrete sample sequence to recreate the original analog signal.
+
+##### The Fourier and Shannon-Nyquist Theorems
+The accurate reconstruction of an analog signal from a digital record is mathematically guaranteed under certain conditions. The *Fourier theorem* - a famous mathematical result - states that any analog signal can be represented by the sum of sinusoidal components of varying frequency and amplitude. The set of frequencies and their amplitudes gives the spectrum of the signal.
+
+Building on this, the *Shannon-Nyquist Sampling theorem* states that given a digital signal, the highest resolvable frequency component (Nyquist Frequency) is half the rate at which the analog signal was originally sampled. Accordingly, to capture all frequencies audible to humans (approximately 20 Hz–20 kHz), digital audio systems typically use sampling rates of 44.1 kHz, 48 kHz, or 96 kHz, corresponding to Nyquist frequencies of 22.05 kHz, 24 kHz, and 48 kHz respectively.
+
+---
+
+#### The Mixxx Audio-Playback Stack
+Mixxx exposes two important parameters in the *Sound Hardware Preferences* panel:
+
+- **Sample Rate (Hz)**: Determines the DAC sample rate, i.e., how frequently audio frames are converted to analog signals.
+- **Audio Buffer (ms)**: Specifies the total buffer duration, indirectly determining the size of ALSA’s ring buffer.
 
 *Mixxx Sound Hardware Preferences*
-![Mixxx Sound Hardware Preferences]({static}images/news/mixxx-sound-hw-prefs.png)
+![Mixxx Sound Hardware Preferences]({static}/images/news/mixxx-sound-hw-prefs.png)
 
+These parameters together influence the quality of output sound by defining the size in frames of the ALSA ring-buffer for the selected sample-rate:
+```
+Ring Buffer Size = (Audio Buffer in s) * (Sample Rate in Hz)
+```
 
-The audio playback chain has three key buffers: A larger, userspace buffer containing outbound, perhaps processed frames of the digital record, an ALSA-managed, DMA-registered ring buffer of configurable size, and a hardware FIFO buffer in the DAC itself. The DAC has a configurable clock, whose clock rate (a.k.a. DAC sample-rate) specifies the fixed frequency at which frames in its hardware FIFO are consumed by the reconstruction filter. For example, a 44.1Khz DAC expects a frame to be available every 1/44.1K = 22.6us, for a total of 44.1K frames every second. Achieving this condition, however, is determined by upstream subsytems such as ALSA and parameters set by Mixxx. The `Sample Rate (Hz)` setting configures the DAC sample-rate, and the `Audio Buffer (ms)` sets the size in frames of the ALSA ring buffer for the selected `Sample Rate (Hz)`.
- 
-The ALSA ring-buffer is of size `ring_buffer_size = Audio Buffer (ms)/1000 * Sample Rate (Hz)` frames, set via Mixxx preferences. Mixxx writes processed audio frames to the ring-buffer in units of atmost `ring_buffer_size` frames, and the ring-buffer is emptied in units of `period_size` frames (usually = `Audio Buffer/2`)[[1]](#1), negotiated between Mixxx and the audio driver. During playback, a software interrupt is triggered each time `period_size` frames are consumed from the ring buffer and DMA-transferred to the DAC FIFO. The interrupt is handled by a high-priority callback thread in Mixxx, which refills the ring-buffer with more frames. While technically, only `period_size` frames are written to the DAC on every callback, Mixxx prepares `ring_buffer_size` frames in that duration. We can therefore simplify our model by noting that on average, `ring_buffer_size` frames are written to the DAC every callback.
+##### Mixxx Buffering Hierarchy
+As audio frames move from Mixxx to the speakers, they pass through three distinct buffering levels:
 
-From the `period_size` and DAC sample rate, we can calculate `period_time = period_size/Sample Rate` as the hard real-time constraint on the user-space callback function. In other words, for the DAC hardware FIFO to never starve, the userspace callback thread must prepare atleast `period_size` worth of frames in atmost `period_time` time. Whether the constraint is met depends on various factors such as the amount of processing performed in the real-time thread, OS memory pressure, scheduling latency, etc. None of these kernel procedures have strict real-time guarantees, therefore on occasion, if `period_time` is too short, one hears pops during playback. This audio distortion is called a buffer underrun - highly undesireable in any live-DJ software. Since the main aim of Mixxx is to allow DJs to manipulate loaded tracks in creative ways -  via mixing, ramping track tempo, digital effects, scratching, etc., the realtime thread must perform far more processing than a standard audio player. This requires low-latency implementations of audio processing workflows without degrading audio quality.
+**Mixxx Buffer** (userspace, heap):  
+   Holds outbound frames from the track, possibly post-processing or effects.  
+   This buffer is typically larger and acts as the staging area for frames handed off to ALSA.
 
-#### Sample Rate Conversion
-While buffer underruns are a result of DAC starvation agnostic of the buffer contents, another class of audio distortions is caused by the DAC not having the *right set* of frames in its FIFO. Resampling outbound audio is a procedure that ensures the DAC is receives the set of frames required to generate the analog playback characteristics we desire. The primary use-case is to resolve a sample-rate mismatch between DAC and the digital record.
+**ALSA Ring Buffer** (kernel-managed, DMA-mapped):  
+   A circular buffer of configurable size (in frames), subdivided into **periods**. Mixxx writes to this buffer in chunks, while the DMA engine drains it in `period_size` frames - a value negotiated between Mixxx and the audio-card driver at initialization. Usually, `period_size = Ring Buffer Size / 2`[^1]. Each time a period is emptied, ALSA triggers a software interrupt which is handled by a userspace callback in a high-priority Mixxx thread. This callback prepares frames and refills the ring-buffer.
 
-The input sample rate defines how many frames of a digital record represent one second of analog audio. Meanwhile the DAC sample rate specifies how many outbound frames are consumed per second of real-world (wall-clock) time during playback. For example, a digital record sampled from analog at 48 kHz stores 48,000 frames for every second of analog sound. If this record is played back on a DAC operating at 44.1 kHz, assuming no underruns, only 44,100 frames are processed each second—meaning less than a full second of the outbound audio is played back per second. This results in an unintended slowdown. Conversely, if the DAC sample rate exceeds the input sample rate, more than one second of the original recording is heard every second, creating the perception of sped-up playback.
+**DAC FIFO** (hardware-level):  
+   A small first-in-first-out queue that is read at the **DAC sample rate**, typically 44.1 kHz, 48 kHz, or 96kHz. This hardware buffer feeds the analog reconstruction circuitry with upstream frames. For instance, a 96kHz DAC consumes one frame every 1/96k s (≈10.4 us), totaling 96000 frames per second.
 
-Embed audio: [[wav@44.1Khz on 48K]], [[wav@48Khz on 44.1K]], [[wav@48Khz on 48K]]
+*Mixxx, ALSA, DAC buffers*
+![Mixxx Buffering Hierarchy]({static}/images/news/mixxx-buffer-heirarchy.jpeg)
 
-Mixxx offers features besides simple audio playback. Another use-case for resampling is during an intentional tempo ramp, when there is no sample-rate mismatch.  For a record sampled at 44.1kHz with a DAC also at 44.1kHz, scaling tempo by a factor of 3 means we want to pass 3x frames to the DAC on each callback than we would during standard playback. Without resampling, attempting to write 3x frames per callback would overfill the Mixxx-ALSA buffer. In the worst case, the excess frames would be dropped. Either way, the DAC would still consume only 44.1k frames per second—nullifying the intended tempo increase. It is clear that we need to create a situation where we can represent a longer amount of track duration using less frames, while ensuring that the resampled frames are still capable of being reconstructed. That is, every second, we need to represent 3 *44.1k frames using 44.1k frames only. This resample is achieved by a procedure called digital decimation, wherein frames are actually removed from a longer sequence before being written to the DAC. Conversely, digital interpolation is used when increasing track tempo, whereby new frames are generated between true samples using various algorithms. `SoundTouch`, `RubberBand`, `libzita` and `libsamplerate` are examples of open-source C++ libraries that implement standard interpolation algorithms to perform time-stretching on streaming data.
+ While technically, only `period_size` frames are written to the DAC between callbacks via DMA, Mixxx prepares `Ring Buffer Size` frames in that duration. We can therefore simplify our model by noting that on average, `Ring Buffer Size` frames are written to the DAC every callback.
 
-### Pull Requests and issues
-[mixxx#] libsamplerate with callback API
+##### Buffer Underruns
+From the `period_size` we compute `period_time = period_size / DAC Sample Rate`. This defines a hard real-time deadline for the userspace audio callback: it must prepare at least `period_size` frames within `period_time` to avoid starving the DAC’s hardware FIFO. This relation also confirms that large ring-buffers and lower DAC sample-rates reduce CPU pressure.
+
+Whether this constraint is met depends on several factors - such as the complexity of audio processing in the real-time thread, OS scheduling latency, memory pressure, etc. Since general-purpose kernels do not provide any real-time guarantees, short `period_time` values can occasionally cause the callback to miss its deadline. The result is a **buffer underrun**, heard as a pop or glitch in playback—unacceptable in live DJ performance.
+
+Unlike typical audio players, Mixxx performs real-time manipulation of audio—mixing, tempo changes, effects, scratching, and more - making the callback workload heavier. This demands low-latency implementations of all audio processing workflows to avoid underruns without compromising quality.
 
 ---
 
-[mixxx#] Support for custom recording samplerates
+#### The Need for Sample-Rate Conversion
+While buffer underruns occur due to DAC starvation regardless of the buffer contents, another class of audio distortions is caused arises when the DAC receives the wrong sequence of frames in its FIFO.
+
+***The input sample rate defines how many frames of a digital record represent one second of analog audio***. For example, a digital record sampled from analog at 96kHz stores 96,000 frames for every second of analog sound. ***The DAC sample rate specifies how many outbound frames are consumed per second of real-world (wall-clock) time during playback.***
+
+* If a 96kHz record is played back on a DAC operating at 48 kHz without resampling, only 48k frames are processed each second—meaning less than a full second of the outbound audio is played back per second. This results in an unintended slowdown.
+* Conversely, if the DAC sample rate exceeds the input sample rate, more than one second of the original recording is heard every second, creating the perception of sped-up and pitch-shifted playback.
+
+<section style="margin-top: 2rem;">
+  <h5 style="text-align: center;">Tempo ramping (sample-rate mismatch, no resampling)</h5>
+  <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; justify-content: center; margin-top: 1rem;">
+    <figure style="display: flex; flex-direction: column; align-items: center;">
+      <figcaption style="font-weight: bold; margin-bottom: 0.2rem;">Base (96kHz input, 96kHz DAC)</figcaption>
+      <audio controls style="width: 250px;">
+        <source src="{static}/audio/96in_96out_base-10s.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </figure>
+    <figure style="display: flex; flex-direction: column; align-items: center;">
+      <figcaption style="font-weight: bold; margin-bottom: 0.2rem;">Speedup (96kHz input, 192kHz DAC)</figcaption>
+      <audio controls style="width: 250px;">
+        <source src="{static}/audio/96in_192out_speedup-10s.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </figure>
+    <figure style="display: flex; flex-direction: column; align-items: center;">
+      <figcaption style="font-weight: bold; margin-bottom: 0.2rem;">Slowdown (96kHz input, 48kHz DAC)</figcaption>
+      <audio controls style="width: 250px;">
+        <source src="{static}/audio/96in_48out_slowdown-10s.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </figure>
+  </div>
+</section>
+
+In these scenarios, resampling is a corrective procedure that transforms audio sampled at the input sampling rate to match the DAC’s expected output rate.
+
+Resampling may also be used to *induce* tempo ramping. For a record sampled at 96kHz with a DAC also at 96kHz, scaling tempo by a factor of 3 means we want to pass 3x frames to the DAC on each callback than we would during standard playback.
+
+- Without resampling, writing 3x frames per callback in an attempt to increase tempo would overfill the Mixxx-ALSA buffers. In the worst case, the excess frames would be dropped. Either way, the DAC would still consume only 96k frames per second instead of the entire 3 * 96k — nullifying the intended tempo increase.
+- For accurate tempo-ramping, we must represent a longer amount of track duration using less frames, while ensuring that there are enough remaining frames for accurate reconstruction. That is, every second, we need to represent 3 * 96k frames using 96k frames only.
+- This resample is achieved by a procedure called digital *decimation*, wherein frames are actually removed from a longer sequence before being written to the DAC.
+- Conversely, digital *interpolation* is used when increasing track tempo, whereby new frames are generated between true samples using various algorithms.
+
+ This is the reason higher samplerates are preferred in audio editing workflows: there is more room for decimation.
+
+`SoundTouch`, `RubberBand`, `libzita` and `libsamplerate` are examples of open-source C++ libraries that implement standard algorithms to perform time-stretching on streaming data.
 
 ---
 
+#### Contributions
+**[mixxxPR#15081](https://github.com/mixxxdj/mixxx/pull/15081): Custom samplerates setting for recording.**
 
-[mixxx#]Support for custom broadcast samplerates
+This PR introduces an improved user experience in the recording preferences page. No more error messages for incompatible formats. The GUI maintains the necessary format invariants. This PR also introduces `libsamplerate` to the build system along with a base resampler class using the libsamplerate `src_process` API.
 
+**Key Files**
 
+- [dlgprefsrecording.cpp]
+- [enginerecord.cpp]
+- [recordingmanager.cpp]
+
+---
+
+**[mixxxPR#15160](https://github.com/mixxxdj/mixxx/pull/15160): Custom samplerates setting for broadcasting.**
+
+This PR allows users to choose custom samplerates for each broadcast profile, independently of the engine samplerate.
+
+**Key Files**
+
+- [dlgprefsbroadcast.cpp]
+- [shoutconnection.cpp]
+- [broadcastmanager.cpp]
+
+Users can now pick custom samplerates for both recording and broadcasting, independent of the engine samplerate.
+
+---
+
+[PR#15005](https://github.com/mixxxdj/mixxx/pull/15005): Support for low-latency scratching using the libsamplerate callback API
+
+This PR implements a resampler class using the libsamplerate Callback API. We observed a reduction in per-buffer resampling latency from 20us to 10us - a 2x improvement over the handcrafted linear interpolator.
+
+**Key Files**
+
+- [enginebuffer.cpp]
+- [enginemixer.cpp]
+- [enginebufferscalesrc.cpp]
+- [dlgprefsound.cpp]
+
+---
 
 ### Future Work
-The merge of 
+- Benchmarking the latency and CPU usage of the various resamplers during scratching.
 
 
-
-### Conclusion
-The 
-
-
+### Acknowledgements
+I thank Daniel, Evelynne, Ronny, and JoergBerg, who have spent considerable time reviewing my PRs and offering assistance anytime I needed it.
 
 
 ### References
-<a id="1">[1]</a> https://0pointer.de/blog/projects/all-about-periods.html
+[^1] https://0pointer.de/blog/projects/all-about-periods.html
