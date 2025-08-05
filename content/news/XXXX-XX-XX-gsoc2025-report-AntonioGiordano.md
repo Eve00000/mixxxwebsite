@@ -35,8 +35,8 @@ This project introduces the ability for Mixxx to truly understand "what a genre 
 - **Drag & Drop**: Reorder genres to match your preferred organization
 - **Auto-Creation**: New genres are automatically added to the database when you type them
 
-[![Single Track Genre Demo](https://github.com/user-attachments/assets/6cd37238-07dd-4362-b329-1283cb380c6a)](https://drive.google.com/file/d/1belGgaUcrXdciK41SmdwU7kd3rrIiVhP/view?usp=sharing)  
-*Click to watch the single-track demo video*
+@Video(https://www.youtube.com/watch?v=5vg1IkYBj2Y)
+*Click to watch the single-track demo video*  
 
 ### Game-Changing Multi-Track Genre Editing
 
@@ -48,7 +48,7 @@ This project introduces the ability for Mixxx to truly understand "what a genre 
 - **Efficient Workflow**: Manage your entire library with just a few clicks
 - **Intelligent Strategy**: Only common genres are modified, unique metadata stays intact
 
-[![Multi-Track Genre Demo](https://github.com/user-attachments/assets/872b7bee-5c4f-4bc6-96ef-25e33320b9d3)](https://drive.google.com/file/d/1laRS9sd3u6QmDkkG0NWZkKerGl-oBX1a/view?usp=sharing)  
+@Video(https://www.youtube.com/watch?v=YBvEhsZEIgo)
 *Click to watch the multi-track demo video*
 
 ### Robust Backend Architecture
