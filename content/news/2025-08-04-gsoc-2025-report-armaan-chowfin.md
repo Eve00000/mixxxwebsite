@@ -1,17 +1,179 @@
-title: GSoC 2025 Work Product - Resampling Options for Mixxx
+title: GSOC 2025 Work Product - Resampling Options for Mixxx
 authors: Armaan Chowfin
 tags: gsoc, gsoc-2025
 comments: yes
 date: 2025-08-04 17:42:53
 
-This GSOC project is derived from [Mixxx issue#9328](https://github.com/mixxxdj/mixxx/issues/9328). The goal is to determine whether alternative interpolation algorithms result in a *noticeable reduction in scratching artifacts or a latency improvement over linear interpolation*, **providing quantitative supporting evidence** where possible.
+Presenting the latest additions to Mixxx:  
+**[issue#9328](https://github.com/mixxxdj/mixxx/issues/9328): Additional interpolation options for scratching**  
+**[issue#10611](https://github.com/mixxxdj/mixxx/issues/10611): Custom output samplerates for recording and broadcast**.
+
+The scratching engine now supports a sinc-based resampler with three quality settings, and the original linear resampler is now twice as fast. Additionally, outbound audio is resampled before encoding for recording or streaming. This can improve compatibility with limited or fixed-rate sound cards.
+
+#### Audio Engineering Keywords
+**Time and Frequency Domain:**  
+
+
 
 #### Introduction
-On a turntable, scratching is performed by moving the stylus by hand - causing it to follow grooves in the vinyl that correspond to the analog audio waveform. Mixxx offers the ability to emulate vinyl scratching on digital records, by spinning the jog wheels of a MIDI controller to emulate the motion of the turntable stylus during scratching. The action of scratching causes a sudden acceleration or deceleration in tempo of the loaded record(s).
+Mixxx uses the `SoundTouch` and `RubberBand` time-stretching libraries for resampling during a keyLock operation. However, these libraries are unsuitable for scratching due to the fast changing tempo and pitch. Currently a faster, handcrafted linear interpolation algorithm is used - but there have been reports of suboptimal audio quality.  
 
-Emulation of vinyl scratching requires low latency tempo ramping, which in turn requires resampling. Sub-optimal resampling leads to audible distortions during scratching, particularly underflows. While there is technically also a chance for phase distortion due to incorrect interpolation algorithms, it is far less noticeable.
+Digital Signal Processing (DSP) theory tells us that linear interpolation is not ideal, and that a sinc-based resampler will always return interpolated values identical to the original analog signal, under certain constraints. However, practical implementations of sinc resampling are computationally heavy and generally unsuitable for low-latency realtime software such as Mixxx. Therefore,
 
-At present, the Mixxx resampler for scratching uses a fast, handcrafted linear interpolation algorithm. Mixxx also uses the `SoundTouch` and `RubberBand` libraries to perform general audio time-stretching, but their performance is not optimal for fast changing speed and pitch which is the case when scratching.
+* One objective of this GSoC project was to explore the feasibility of using sinc interpolation for scratching. To this end, the `libsamplerate` and `libzita` resample latencies were evaluated.
+* Another focus was to investigate and improve the performance of the current linear resampler. Here, we observed that the `libsamplerate` linear interpolator outperformed our own, *reducing per-buffer resample latency from 20µs to 10µs.*
+
+#### Theoretical Foundations
+Much of the work during GSOC involved integrating external C and C++ libraries into Mixxx. However, understanding the interpolation algorithms requires an overview of some foundational ideas in DSP - provided below.
+
+##### Analog-to-Digital and Digital-to-Analog
+<div style="border: 1px solid white; padding: 16px; margin-bottom: 24px; border-radius: 6px; line-height: 1.6;">
+  <strong>Summary:</strong>
+  <ul style="margin-top: 8px; margin-bottom: 0; padding-left: 16px;">
+    <li>Every digital signal has a time-domain representation (sample sequence) and frequency-domain representation (replicated spectrum).
+    <li>ADC performs periodic sampling by multiplying the analog input signal with a unit impulse train.
+    <li>DAC performs signal reconstruction by applying an analog Low-Pass Filter to the sample sequence.</li>
+    <li>DAC signal reconstruction will be perfect if the original analog signal was Low-Pass filtered to below Nyquist Frequency before ADC sampling.
+    <li>Filters implemented in hardware are called analog filters, those implemented in software are called digital filters.
+  </ul>
+</div>
+
+An analog signal is a continuous-time, continuous-amplitude function. The **Fourier theorem** states that any analog signal can be viewed as the infinite sum of time-domain sinusoid components of varying frequency and amplitude. The set of components gives the *spectrum* of the signal. A signal's continuous spectrum is generally represented by an Amplitude-Frequency graph.
+
+Its digital counterpart is a discrete-time sequence formed by **sampling** the analog amplitude at uniform time intervals, called sample-periods. In the time domain, sampling is represented as multiplying an analog signal with an impluse train. In practice, time-domain sampling is performed by electrical circuits in an Analog to Digital converter (ADC).
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Periodic Sampling in the Time Domain</h5>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="width: 53%;">
+      <img src="{static}/images/news/mixxx-sampling-analog-digital.jpeg" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 1:</strong> Mathematical Impulse-Train Sampling</p>
+    </div>
+    <div style="width: 46%;">
+      <img src="{static}/images/news/mixxx-sample-and-hold-circuit.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 2:</strong> ADC Sample-and-Hold Circuit</p>
+    </div>
+  </div>
+</div>
+
+In the frequency domain, *sampling with any frequency f<sub>s</sub> always creates replicas of the spectrum of the original signal, centered at integer multiples of f<sub>s</sub>*. In the figures below, the left-hand side polygon represents the assumed spectrum of the time-domain signal in Figure 1. Its highest frequency component is B hz, and the range `[-B, B]` is referred to as the **baseband** of the analog signal.
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Periodic Sampling in the Frequency Domain</h5>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="width: 49%;">
+      <img src="{static}/images/news/mixxx-spectral-replication-no-overlap.png" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 3:</strong> Spectral replication without overlap.</p>
+    </div>
+    <div style="width: 49%;">
+      <img src="{static}/images/news/mixxx-spectral-replication-with-overlap.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 4:</strong> Spectral replication with overlap</p>
+    </div>
+  </div>
+</div>
+
+The purpose of sampling an analog signal is to create a representation that can be stored and manipulated by digital computers. However, these digital representations are only valuable if they can eventually be perceived in the real world. The process of converting a sampled signal back into a continuous-time analog signal is called **signal reconstruction**. Depending on the relative values of B and f<sub>s</sub>, the spectral replicas created during sampling may overlap in the baseband, resulting in additive distortion. This phenomenon is termed **aliasing** and is perceived only on signal reconstruction.
+
+
+<!-- A central challenge is that knowledge only of periodic amplitudes (i.e. samples) does not allow us to infer a unique frequency for the original signal. In other words, periodic sampling leads to ambiguity in the frequency domain. -->
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight: bold;">Aliasing in the Time Domain</h5>
+
+  <div style="width: 70%; margin: 0 auto;">
+    <img src="{static}/images/news/mixxx-time-domain-aliasing.jpeg" alt="aliasing in time domain" style="width: 100%; height: auto;">
+    <p style="font-size: small; margin-top: 5px;">
+      <strong>Figure 5:</strong> When a sine wave is sampled below the Nyquist rate, multiple analog sinusoids can fit the same set of samples. The figure shows two possible original signals that are consistent with the sampled data.
+    </p>
+  </div>
+</div>
+
+<!-- Reconstructing via LPF will only return the signal with spectral content within [-fs/2, fs/2] -->
+
+In theory, signal reconstruction is performed by applying a low-pass filter to the input sample sequence, to eliminate the spectral replications that were created during sampling. This leaves only the spectral components in the baseband. If f<sub>s</sub> > 2B as in Figure 3, the baseband spectral component after sampling still represents the original spectrum. This criterion is formalized by the **Shannon-Nyquist sampling theorem**, which states that an analog signal must be sampled at at least twice the frequency of its highest-frequency component (Nyquist frequency) to ensure no aliasing upon signal reconstruction.
+
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Ideal Low Pass Filter in the Frequency Domain</h5>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="width: 50%;">
+      <img src="{static}/images/news/mixxx-lpf-no-alias.png" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 6:</strong> Low pass (Brick Wall) filter, no aliasing. The reconstruction low pass filter in the DAC assumes that the input meets the Nyquist criterion.</p>
+    </div>
+    <div style="width: 50%;">
+      <img src="{static}/images/news/mixxx-lpf-alias.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 7:</strong> Failure to meet Nyquist criterion results in aliasing.</p>
+    </div>
+  </div>
+</div>
+
+If f<sub>s</sub> < 2B as in Figure 4, implying that the original signal has some higher-than Nyquist components, filtering would yield in a distorted baseband due to the "folding-back" of higher frequency sinusoid components. Therefore it is important to pass the analog signal through an analog low-pass filter before it is sampled by the ADC.
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Discrete Convolution in the Time Domain</h5>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="width: 72%;">
+      <img src="{static}/images/news/mixxx-discrete-convolution.jpeg" alt="convolution" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 8:</strong> Convolving a 5-tap impulse response h(k) with a digital signal x(nT), where T is the sample-period. Outputs y(n) are obtained by sliding the input sequence over the stationary coefficients.
+    </div>
+    <div style="width: 28%;">
+      <img src="{static}/images/news/mixxx-sinc-coeffs.jpeg" alt="sinc coeffs" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 9:</strong> 9-tap and 19-tap impulse responses of a lowpass filter. The sinc impulse response is convolved with an input sequence to generate a time-domain output sequence.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 
+In the time domain, signal reconstruction is performed by convolving a finite sequence of fixed filter coefficients with the input sample sequence. The filter coefficients can be derived mathematically, and for an ideal lowpass filter, the coefficients are an infinte-length sequence of samples of a sinc function taken at integer multiples of the sample-period. 
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Ideal Low-Pass Filter in the Time Domain</h5>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="width: 65%;">
+      <img src="{static}/images/news/mixxx-discrete-convolution.jpeg" alt="convolution" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 8:</strong> Convolving a 5-tap impulse response h(k) with a digital signal x(nT), where T is the sample-period. Outputs y(n) are obtained by sliding the input sequence over the stationary coefficients.
+    </div>
+    <div style="width: 35%;">
+      <img src="{static}/images/news/mixxx-sinc-coeffs.jpeg" alt="sinc coeffs" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 9:</strong> 9-tap and 19-tap impulse responses of a lowpass filter. The sinc impulse response is convolved with an input sequence to generate a time-domain output sequence.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- - In practice, a finite sequence contained in a windowed sinc function is used to perform convolution.
+- As the length of the sequence increases, its behaviour approaches that of an ideal (brick-wall) low pass filter.
+
+<diagram convolution steps, LPF in time domain>
+
+
+To conclude, we can say: *The process of eliminating spectral replications in the frequency domain results in signal reconstruction in the time domain.* --> 
+
+---
+
+##### Sample Rate Conversion
+Key idea: Pretend the original analog signal is made of sinc pulses centered on the known samples. Software stores values of sinc kernel at a large (but finite) set of fractional points in (0,1). new sample values are calculated by finding the closest stored value to the theoretical prediction.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### Background: Analog and Digital Audio
 Vibrations of the surrounding air in turn cause the human eardrum to vibrate, and generate a continuous electrical signal. In audio-engineering terms, this electrical signal represents "analog audio", and our ear represents a (biological) "audio interface", i.e. a gateway for audio to enter or exit a processing system.
@@ -22,9 +184,6 @@ In the human ear, each cochlear hair cell is tuned to a specific frequency band 
 While an analog signal is represented by its amplitude as continuous function in continuous time, the digital representation of that signal is a time series of amplitude values generated by noting the value of the analog signal at fixed, discrete time intervals.
 
 *The process of generating a digital audio representation from an analog signal is termed **sampling***, and the length of the time interval is termed the "sample-period (its reciprocal - the **sampling rate** - is more commonly used while describing digital audio). Mathematically, sampling is represented as multiplying an analog signal with an impluse train in the time-domain.
-
-*Periodic Sampling*
-![periodic sampling]({static}/images/news/mixxx-sampling-analog-digital.jpeg)
 
 
 In practice, when analog audio from a sound source enters a mic, it is converted to a continuous electrical signal. Finally, a component called the **ADC (Analog to Digital Converter)** records the electrical signal voltage at a fixed sampling rate such as 44.1KHz, 48Khz or 96Khz, to generate a series of amplitude values, i.e. *samples*. Each sample is stored as a fixed-precision floating point number.
@@ -136,6 +295,7 @@ Resampling may also be used to *induce* tempo ramping. For a record sampled at 9
 
 ---
 
+
 #### Contributions
 **[mixxxPR#15081](https://github.com/mixxxdj/mixxx/pull/15081): Custom samplerates setting for recording.**
 
@@ -175,6 +335,7 @@ This PR implements a resampler class using the libsamplerate Callback API. We ob
 - [dlgprefsound.cpp]
 
 ---
+
 
 ### Future Work
 - Benchmarking the latency and CPU usage of the various resamplers during scratching.
