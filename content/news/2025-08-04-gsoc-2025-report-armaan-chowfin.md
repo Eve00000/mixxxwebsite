@@ -12,29 +12,30 @@ The scratching engine now supports a sinc-based resampler with three quality set
 
 #### Audio Engineering Keywords
 **Time and Frequency Domain:**  
+**Impulse Response:**
 
 
 
 #### Introduction
 Mixxx uses the `SoundTouch` and `RubberBand` time-stretching libraries for resampling during a keyLock operation. However, these libraries are unsuitable for scratching due to the fast changing tempo and pitch. Currently a faster, handcrafted linear interpolation algorithm is used - but there have been reports of suboptimal audio quality.  
 
-Digital Signal Processing (DSP) theory tells us that linear interpolation is not ideal, and that a sinc-based resampler will always return interpolated values identical to the original analog signal, under certain constraints. However, practical implementations of sinc resampling are computationally heavy and generally unsuitable for low-latency realtime software such as Mixxx. Therefore,
+Digital Signal Processing (DSP) theory tells us that linear interpolation is not ideal, and that a sinc-based resampler will always return interpolated values identical to the original analog signal, under certain theoretical constraints. However, practical implementations of sinc resampling are computationally heavy and generally unsuitable for low-latency realtime software such as Mixxx. Therefore,
 
 * One objective of this GSoC project was to explore the feasibility of using sinc interpolation for scratching. To this end, the `libsamplerate` and `libzita` resample latencies were evaluated.
 * Another focus was to investigate and improve the performance of the current linear resampler. Here, we observed that the `libsamplerate` linear interpolator outperformed our own, *reducing per-buffer resample latency from 20µs to 10µs.*
 
 #### Theoretical Foundations
-Much of the work during GSOC involved integrating external C and C++ libraries into Mixxx. However, understanding the interpolation algorithms requires an overview of some foundational ideas in DSP - provided below.
+Although of the work during GSOC involved integrating external C and C++ libraries into Mixxx, understanding the interpolation algorithms requires an overview of some foundational ideas in DSP. By the end of this section, I hope to provide a satisfactory answer to why sinc interpolation provides higher quality resampling.
 
 ##### Analog-to-Digital and Digital-to-Analog
 <div style="border: 1px solid white; padding: 16px; margin-bottom: 24px; border-radius: 6px; line-height: 1.6;">
   <strong>Summary:</strong>
   <ul style="margin-top: 8px; margin-bottom: 0; padding-left: 16px;">
     <li>Every digital signal has a time-domain representation (sample sequence) and frequency-domain representation (replicated spectrum).
-    <li>ADC performs periodic sampling by multiplying the analog input signal with a unit impulse train.
-    <li>DAC performs signal reconstruction by applying an analog Low-Pass Filter to the sample sequence.</li>
-    <li>DAC signal reconstruction will be perfect if the original analog signal was Low-Pass filtered to below Nyquist Frequency before ADC sampling.
     <li>Filters implemented in hardware are called analog filters, those implemented in software are called digital filters.
+    <li>In theory, ADC performs periodic sampling by multiplying an analog input signal with a unit impulse train.
+    <li>In theory, DAC performs signal reconstruction by applying an analog Low-Pass Filter to the sample sequence. This is implemented via a continuous-time convolution</li>
+    <li>In theory, DAC signal reconstruction will be perfect if the original analog signal was Low-Pass filtered to below Nyquist Frequency before ADC sampling.
   </ul>
 </div>
 
@@ -90,15 +91,15 @@ The purpose of sampling an analog signal is to create a representation that can 
 
 <!-- Reconstructing via LPF will only return the signal with spectral content within [-fs/2, fs/2] -->
 
-In theory, signal reconstruction is performed by applying a low-pass filter to the input sample sequence, to eliminate the spectral replications that were created during sampling. This leaves only the spectral components in the baseband. If f<sub>s</sub> > 2B as in Figure 3, the baseband spectral component after sampling still represents the original spectrum. This criterion is formalized by the **Shannon-Nyquist sampling theorem**, which states that an analog signal must be sampled at at least twice the frequency of its highest-frequency component (Nyquist frequency) to ensure no aliasing upon signal reconstruction.
+In theory, signal reconstruction is performed by applying an analog low-pass filter to the input sample sequence, to eliminate the spectral replications that were created during sampling. This leaves only the spectral components in the baseband. If f<sub>s</sub> > 2B as in Figure 3, the baseband spectral component after sampling still represents the original spectrum. This criterion is formalized by the **Shannon-Nyquist sampling theorem**, which states that an analog signal must be sampled at at least twice the frequency (called Nyquist rate) of its highest-frequency component to ensure no aliasing upon signal reconstruction.
 
 
 <div style="text-align: center; margin-bottom: 30px;">
-  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Ideal Low Pass Filter in the Frequency Domain</h5>
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Low Pass Filter in the Frequency Domain</h5>
   <div style="display: flex; justify-content: center; gap: 20px;">
     <div style="width: 50%;">
       <img src="{static}/images/news/mixxx-lpf-no-alias.png" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
-      <p style="font-size: small; margin-top: 5px;"><strong>Figure 6:</strong> Low pass (Brick Wall) filter, no aliasing. The reconstruction low pass filter in the DAC assumes that the input meets the Nyquist criterion.</p>
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 6:</strong> Ideal Low pass (Brick Wall) filter, no aliasing. The reconstruction low pass filter in the DAC assumes that the input meets the Nyquist criterion.</p>
     </div>
     <div style="width: 50%;">
       <img src="{static}/images/news/mixxx-lpf-alias.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
@@ -107,10 +108,37 @@ In theory, signal reconstruction is performed by applying a low-pass filter to t
   </div>
 </div>
 
-If f<sub>s</sub> < 2B as in Figure 4, implying that the original signal has some higher-than Nyquist components, filtering would yield in a distorted baseband due to the "folding-back" of higher frequency sinusoid components. Therefore it is important to pass the analog signal through an analog low-pass filter before it is sampled by the ADC.
+If f<sub>s</sub> < 2B as in Figure 4, implying that the original signal has some higher-than `Nyquist Rate/2` components, filtering would yield in a distorted baseband due to the "folding-back" of higher frequency sinusoid components. Therefore it is important to pass the analog signal through an analog low-pass filter before it is sampled by the ADC to restrict its frequency content.
+
+The principle behind signal reconstruction is the **continuous-time convolution** process. Here, the fixed impulse response h(t) of a First-Order Hold (FOH) filter stays stationary while the sampled sequence x<sub>flipped</sub> slides over it.
 
 <div style="text-align: center; margin-bottom: 30px;">
-  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Discrete Convolution in the Time Domain</h5>
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Low-Pass Filter in the Time Domain</h5>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="width: 90%;">
+      <img src="{static}/images/news/mixxx-continuous-convolution.jpeg" alt="convolution" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Figure 10:</strong> Signal Reconstruction  via continuous-time convolution.  At each time step nT, (where T is the sample-period) the sample x<sub>flipped</sub>(n) scales the triangular impulse response h(t-nT), and the reconstructed signal y(n) is the sum of all such shifted, scaled responses.
+    </div>
+  </div>
+</div>
+
+While the FOH filter approximates the analog signal, the reconstruction is not perfect. In fact, the impulse response for perfect reconstruction can be derived mathematically, and it *turns out to be an infinite impulse response in the shape of a sinc function.*
+
+- When convolved with the input sequence, ideal low-pass filtering occurs: Spectral replicas are eliminated, and the analog time-domain signal is reconstructed.
+
+
+---
+
+##### Sample Rate Conversion
+Key idea: Pretend the original analog signal is made of sinc pulses centered on the known samples. Software stores values of sinc kernel at a large (but finite) set of fractional points in (0,1). new sample values are calculated by finding the closest stored value to the theoretical prediction.
+sinc interpolation: Take a snapshot of the convolution process that happens during signal reconstruction
+
+
+
+While analog filters implement a continuous-time convolution of the input sequence, digital filters can only perform discrete-time convolution.
+
+<div style="text-align: center; margin-bottom: 30px;">
+  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Discrete-Time Convolution</h5>
   <div style="display: flex; justify-content: center; gap: 20px;">
     <div style="width: 72%;">
       <img src="{static}/images/news/mixxx-discrete-convolution.jpeg" alt="convolution" style="width: 100%; height: auto;">
@@ -122,39 +150,6 @@ If f<sub>s</sub> < 2B as in Figure 4, implying that the original signal has some
     </div>
   </div>
 </div>
-
-<!-- 
-In the time domain, signal reconstruction is performed by convolving a finite sequence of fixed filter coefficients with the input sample sequence. The filter coefficients can be derived mathematically, and for an ideal lowpass filter, the coefficients are an infinte-length sequence of samples of a sinc function taken at integer multiples of the sample-period. 
-<div style="text-align: center; margin-bottom: 30px;">
-  <h5 style="margin-bottom: 10px; font-size: 1.8rem; font-weight:bold;">Ideal Low-Pass Filter in the Time Domain</h5>
-  <div style="display: flex; justify-content: center; gap: 20px;">
-    <div style="width: 65%;">
-      <img src="{static}/images/news/mixxx-discrete-convolution.jpeg" alt="convolution" style="width: 100%; height: auto;">
-      <p style="font-size: small; margin-top: 5px;"><strong>Figure 8:</strong> Convolving a 5-tap impulse response h(k) with a digital signal x(nT), where T is the sample-period. Outputs y(n) are obtained by sliding the input sequence over the stationary coefficients.
-    </div>
-    <div style="width: 35%;">
-      <img src="{static}/images/news/mixxx-sinc-coeffs.jpeg" alt="sinc coeffs" style="width: 100%; height: auto;">
-      <p style="font-size: small; margin-top: 5px;"><strong>Figure 9:</strong> 9-tap and 19-tap impulse responses of a lowpass filter. The sinc impulse response is convolved with an input sequence to generate a time-domain output sequence.</p>
-    </div>
-  </div>
-</div>
-
-
-<!-- - In practice, a finite sequence contained in a windowed sinc function is used to perform convolution.
-- As the length of the sequence increases, its behaviour approaches that of an ideal (brick-wall) low pass filter.
-
-<diagram convolution steps, LPF in time domain>
-
-
-To conclude, we can say: *The process of eliminating spectral replications in the frequency domain results in signal reconstruction in the time domain.* --> 
-
----
-
-##### Sample Rate Conversion
-Key idea: Pretend the original analog signal is made of sinc pulses centered on the known samples. Software stores values of sinc kernel at a large (but finite) set of fractional points in (0,1). new sample values are calculated by finding the closest stored value to the theoretical prediction.
-
-
-
 
 
 
@@ -197,12 +192,6 @@ To playback digital records, however, we need the right software. The standardiz
 
 A second requirement of this playback chain is the accurate reconstruction of the original analog signal from the sampled digital representation. Audio playback software communicates with a digital audio interface that contains a **DAC (Digital to Analog Converter)**, which reconstructs the analog signal and supplies it to the speaker. DAC hardware circuits implement digital reconstruction filters. These filters perform mathematical transformations to the discrete sample sequence to recreate the original analog signal.
 
-##### The Fourier and Shannon-Nyquist Theorems
-The accurate reconstruction of an analog signal from a digital record is mathematically guaranteed under certain conditions. The *Fourier theorem* - a famous mathematical result - states that any analog signal can be represented by the sum of sinusoidal components of varying frequency and amplitude. The set of frequencies and their amplitudes gives the spectrum of the signal.
-
-Building on this, the *Shannon-Nyquist Sampling theorem* states that given a digital signal, the highest resolvable frequency component (Nyquist Frequency) is half the rate at which the analog signal was originally sampled. Accordingly, to capture all frequencies audible to humans (approximately 20 Hz–20 kHz), digital audio systems typically use sampling rates of 44.1 kHz, 48 kHz, or 96 kHz, corresponding to Nyquist frequencies of 22.05 kHz, 24 kHz, and 48 kHz respectively.
-
----
 
 #### The Mixxx Audio-Playback Stack
 Mixxx exposes two important parameters in the *Sound Hardware Preferences* panel:
