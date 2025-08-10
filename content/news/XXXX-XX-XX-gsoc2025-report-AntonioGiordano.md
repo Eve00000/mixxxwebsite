@@ -4,7 +4,6 @@ status: draft
 tags: GSoC2025, features, library, metadata, genres, multitrack
 comments:yes
 
----
 
 Hello everyone! I’m **Antonio Giordano**, and I’m excited to share the results of my **Google Summer of Code 2025** work on Mixxx. We’ve introduced **true multi-genre support** with smart autocompletion, a cleaner editing experience, and tools to migrate your existing library—without breaking your flow.
 
