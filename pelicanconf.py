@@ -4,7 +4,7 @@ import jinja2
 import markupsafe
 import markdown
 
-AUTHOR = "Antonio Giordano"
+AUTHOR = "Mixxx DJ Team"
 SITENAME = "Mixxx"
 SITEURL = ""
 
@@ -284,6 +284,11 @@ AUTHOR_METADATA = {
         "github": "acolombier",
         "email": "mixxx@acolombier.dev",
         "tagline": "Mixxx Core Developer",
+    },
+    "Antonio Giordano": {
+        "github": "sdv0001",
+        "email": "g73o82d65n79@protonmail.ch",
+        "tagline": "GSoC 2025 Contributor",
     },
 }
 
