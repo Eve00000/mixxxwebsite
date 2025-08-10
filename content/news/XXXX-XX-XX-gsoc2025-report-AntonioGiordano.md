@@ -1,7 +1,7 @@
 title: GSoC 2025 - Multi-Genre & Autocompletion Support Now in Mixxx!
-authors: Antonio Giordano
+authors: Antonio Giordano
 status: draft
-tags: GSoC2025, features, library, metadata, genres, multitrack
+tags: GSoC2025, features, library, metadata, genres, multitrack
 comments:yes
 
 ---
