@@ -1,6 +1,5 @@
-
 title: GSoC 2025 - Multi-Genre & Autocompletion Support Now in Mixxx!
-authors: Antonio Giordano GSoC 2025 Contributor
+authors: Antonio Giordano
 status: draft
 tags: GSoC2025, features, library, metadata, genres, multitrack
 comments:yes
@@ -41,14 +40,14 @@ You can now edit genres across multiple tracks in one go (experimental):
 Genres now live in a **tree**. Each node shows **track count** and **total duration**. When you select a track, the genres it belongs to become **bold** in the tree—crate-like ergonomics for quick navigation.
 
 - **Drag & drop:** drag tracks from the Tracklist onto a genre to assign it.
-- **Quick menu:** right-click a track → **Genres** to (de)select on the fly.
+- **Quick menu:** right-click a track then **Genres** to (de)select on the fly.
 - **Rename safely:** renaming a genre changes the **name**, not the ID, so tracks keep their associations.
 
 ### 4 Clean Migration: “Orphan Genres”
 
 If your library contains free-text genres, Mixxx detects **orphans** and helps you clean them up:
 
-- Right-click the **root** of the genre tree → **Edit Orphan Genres**.
+- Right-click the **root** of the genre tree then **Edit Orphan Genres**.
 - **Add** a new genre or **Link** a string to an existing one.
 - Multi-word strings appear as both a full string *and* individual tokens; add the full string first if you want to keep it as a single genre.
 
@@ -76,21 +75,21 @@ If your library contains free-text genres, Mixxx detects **orphans** and helps
 
 ### Single Track
 
-1. Right-click a track → **Properties**.
+1. Right-click a track, **Properties**.
 2. In **Genre**, start typing and pick from autocomplete.
 3. Click the **×** to remove a tag.
 4. **OK** or **Apply** to save.
 
 ### Multi Track (Experimental)
 
-1. Select multiple tracks → right-click → **Properties**.
+1. Select multiple tracks then right-click then **Properties**.
 2. See the **common** genres across the selection.
 3. Add or remove tags in bulk.
 4. Save: Mixxx preserves track-specific genres.
 
 ### Clean Up Old Text Tags
 
-1. In the genre tree, right-click the **root** → **Edit Orphan Genres**.
+1. In the genre tree, right-click the **root** then **Edit Orphan Genres**.
 2. **Add** new genres or **Link** strings to existing ones.
 3. Repeat as needed, your sets keep running.
 
