@@ -100,7 +100,7 @@ If your library contains free-text genres, Mixxx detects **orphans** and helps y
 
 ### Demo video (quick tour)
 
-@Video(https://www.youtube.com/watch?v=46gCxOuhvPg&t=1s)
+@Video(https://www.youtube.com/watch?v=46gCxOuhvPg)
 *This short video bundles all demos: single-track tag chips, multi-track bulk edit, the Genre Tree with drag-and-drop and **F2** rename, and the **Edit Orphan Genres** flow*
 
 ### What's Next
