@@ -4,7 +4,7 @@ import jinja2
 import markupsafe
 import markdown
 
-AUTHOR = "Mixxx DJ Team"
+AUTHOR = "Antonio Giordano"
 SITENAME = "Mixxx"
 SITEURL = ""
 
