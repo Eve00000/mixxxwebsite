@@ -281,11 +281,11 @@ Mixxx performs real-time manipulation of audio: live mixing, tempo changes, effe
 
 Mixxx provides an abstract `EngineBufferScale` class, which is subclassed to implement resamplers using various time-stretching libraries. `EngineBufferScaleST`, `EngineBufferScaleRubberband`, `EngineBufferScaleSRC`, `EngineBufferScaleZita` implement resamplers that use the [SoundTouch](https://www.surina.net/soundtouch/), [Rubberband](https://breakfastquay.com/rubberband/), [SampleRate](https://libsndfile.github.io/libsamplerate/) and [libzita-resampler](https://kokkinizita.linuxaudio.org/linuxaudio/zita-resampler/resampler.html) library APIs respectively.
 
-During a live DJ set where the end result is an audio output, the resampling step happens in the player - between the soundsource and the engine. The exact flow is as follows, where T isi the rack sample-rate and E is the Engine (DAC) sample-rate:  
+During a live DJ set where the end result is an audio output, the resampling step happens in the player - between the soundsource and the engine. The exact flow is as follows, where T is the rack sample-rate and E is the Engine (DAC) sample-rate:  
 
 i. Sound source (T)  
 ii. Read ahead manager (T)  
-iii. Resample #1 (T -> E): `scaleBuffer()`
+iii. Resample #1 (T -> E): `scaleBuffer()`  
 iv. Engine buffer (E)  
 v. Engine mixer (E)  
 
@@ -293,8 +293,8 @@ With the new additions from this GSOC project, additional resampling occurs in t
 
 vi. Sidechain (E)  
 vii. Record/Broadcast (E)  
-viii. Resample #2 (E -> R): `scaleBufferOneShot()`
-ix. Encoding (R): `encodeBuffer()`
+viii. Resample #2 (E -> R): `scaleBufferOneShot()`  
+ix. Encoding (R): `encodeBuffer()`  
 
 <!-- Mixxx exposes two important parameters in the *Sound Hardware Preferences* panel:
 
@@ -341,58 +341,106 @@ This GSOC project was derived from reports suggesting sub-par audio quality duri
 
 A scratch can triggered by spinning the jog wheels of a MIDI controller. The architecture of Mixx ensures that the associated change in tempo ratio is made available to the resampler between DAC callbacks at the earliest. Mixxx acts on buffer chunks, for example 20 ms. The scratch control command is taken into account between these buffers. To have a steady tempo without clicks and pops, a ramp is applied. For example, if a user changes tempo from 1x to 2x, one additional buffer is used to slowly change the tempo from 1x to 2x.
 
-The scratch control command directs the chosen resampler to adjust the quantity of input frames it requests from the Read-Ahead Manager and then interpolate to the desired output frame count. This emulates the effect of scratching - i.e. an interval of high/low-frequency output due to sudden tempo change. Our empirical tests have revealed the following per-buffer resample latencies for each resampler:
+The scratch control command directs the chosen resampler to adjust the quantity of input frames it requests from the Read-Ahead Manager and then interpolate to the desired output frame count. This emulates scratching - i.e. playback of high/low-frequency output due to sudden tempo change. Our empirical tests have revealed the following per-buffer resample latencies for each resampler:
 
-<!-- <table of resample latencies> -->
+<table>
+<tr><th>Resampler</th><th>Per-Buffer Latency</th>
+<tr><td>SampleRate Linear</td><td>10 µs</td>
+<tr><td>Handcrafted Linear</td><td>20 µs</td>
+<tr><td>SampleRate Fastest Sinc</td><td>57 µs</td>
+<tr><td>SampleRate Highest-Quality Sinc</td><td>448 µs</td>
+</table>
+---
 
 #### Contributions
-**[mixxxPR#15081](https://github.com/mixxxdj/mixxx/pull/15081): Custom samplerates setting for recording.**
+**[mixxxPR#15081](https://github.com/mixxxdj/mixxx/pull/15081): Custom samplerates setting for recording.**  
+Status: *Merged*
 
-This PR introduces an improved user experience in the recording preferences page. No more error messages for incompatible formats. The GUI maintains the necessary format invariants. This PR also introduces `libsamplerate` to the build system along with a base resampler class using the libsamplerate `src_process` API.
+This PR introduces an improved user experience in the recording preferences page. No more error messages for incompatible formats. The GUI maintains the necessary format+sample-rate invariants. This PR also introduces `libsamplerate` to the build system along with a base resampler class using the libsamplerate `src_process` API.
 
 **Key Files**
 
-- [dlgprefsrecording.cpp]
-- [enginerecord.cpp]
-- [recordingmanager.cpp]
+- [dlgprefrecording.cpp](https://github.com/mixxxdj/mixxx/blob/7bf99bed4fac98b6b64b5d3170e5b867c402504a/src/preferences/dialog/dlgprefrecord.cpp)
+- [enginerecord.cpp](https://github.com/mixxxdj/mixxx/blob/7bf99bed4fac98b6b64b5d3170e5b867c402504a/src/engine/sidechain/enginerecord.cpp)
+- [recordingmanager.cpp](https://github.com/mixxxdj/mixxx/blob/7bf99bed4fac98b6b64b5d3170e5b867c402504a/src/recording/recordingmanager.cpp)
+
+**GUI Changes**
+<div style="text-align: center; margin-bottom: 30px;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div style="width: 80%;">
+      <img src="{static}/images/news/mixxx-recording-prefs-before.png" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Before</strong></p>
+    </div>
+    <div style="width: 80%;">
+      <img src="{static}/images/news/mixxx-recording-prefs-after.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>After</strong></p>
+    </div>
+  </div>
+</div>
 
 ---
 
 **[mixxxPR#15160](https://github.com/mixxxdj/mixxx/pull/15160): Custom samplerates setting for broadcasting.**
+Status: *Unmerged*
 
 This PR allows users to choose custom samplerates for each broadcast profile, independently of the engine samplerate.
 
 **Key Files**
 
-- [dlgprefsbroadcast.cpp]
-- [shoutconnection.cpp]
-- [broadcastmanager.cpp]
+- [dlgprefbroadcast.cpp](https://github.com/mixxxdj/mixxx/blob/6cfcecd461de3c6b5a86a8cafcfb334f5b382493/src/preferences/dialog/dlgprefbroadcast.cpp)
+- [shoutconnection.cpp](https://github.com/mixxxdj/mixxx/blob/6cfcecd461de3c6b5a86a8cafcfb334f5b382493/src/engine/sidechain/shoutconnection.cpp)
+- [broadcastprofile.cpp](https://github.com/mixxxdj/mixxx/blob/6cfcecd461de3c6b5a86a8cafcfb334f5b382493/src/preferences/broadcastprofile.cpp)
 
 Users can now pick custom samplerates for both recording and broadcasting, independent of the engine samplerate.
+
+**GUI Changes**
+<div style="text-align: center; margin-bottom: 30px;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div style="width: 80%;">
+      <img src="{static}/images/news/mixxx-broadcast-prefs-before.png" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Before</strong></p>
+    </div>
+    <div style="width: 80%;">
+      <img src="{static}/images/news/mixxx-broacast-prefs-after.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>After</strong></p>
+    </div>
+  </div>
+</div>
 
 ---
 
 **[mixxxPR#15005](https://github.com/mixxxdj/mixxx/pull/15005): Support for low-latency scratching using the libsamplerate callback API**
+Status: *Unmerged*
 
 This PR implements a resampler class using the libsamplerate Callback API. We observed a reduction in per-buffer resampling latency from 20us to 10us - a 2x improvement over the handcrafted linear interpolator.
 
 **Key Files**
 
-- [enginebuffer.cpp]
-- [enginemixer.cpp]
-- [enginebufferscalesrc.cpp]
-- [dlgprefsound.cpp]
+- [enginebuffer.cpp](https://github.com/mixxxdj/mixxx/blob/ede79a2cbae107b557126905e246e6fac011b647/src/engine/enginebuffer.cpp)
+- [enginemixer.cpp](https://github.com/mixxxdj/mixxx/blob/ede79a2cbae107b557126905e246e6fac011b647/src/engine/enginemixer.cpp)
+- [enginebufferscalesrc.cpp](https://github.com/mixxxdj/mixxx/blob/ede79a2cbae107b557126905e246e6fac011b647/src/engine/bufferscalers/enginebufferscalesr.cpp)
+- [dlgprefsound.cpp](https://github.com/mixxxdj/mixxx/blob/ede79a2cbae107b557126905e246e6fac011b647/src/preferences/dialog/dlgprefsound.cpp)
+
+**GUI Changes**
+<div style="text-align: center; margin-bottom: 30px;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div style="width: 80%;">
+      <img src="{static}/images/news/mixxx-scratching-engine-prefs-before.png" alt="Periodic Sampling 1" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>Before</strong></p>
+    </div>
+    <div style="width: 80%;">
+      <img src="{static}/images/news/mixxx-scratching-engine-prefs-after.png" alt="Periodic Sampling 2" style="width: 100%; height: auto;">
+      <p style="font-size: small; margin-top: 5px;"><strong>After</strong></p>
+    </div>
+  </div>
+</div>
 
 ---
 
 
-### Future Work
+#### Future Work
 - Benchmarking the latency and CPU usage of the various resamplers during scratching.
+- Creating a test-suite for various scratching patterns.
 
-
-### Acknowledgements
-I thank Daniel, Evelynne, Ronny, and JoergBerg, who have spent considerable time reviewing my PRs and offering assistance anytime I needed it.
-
-
-### References
-[^1] https://0pointer.de/blog/projects/all-about-periods.html
+#### Acknowledgements
+I thank Daniel Schürmann, Evelynne Veys, Ronny, and Jörg Wartenberg, who have spent considerable time reviewing my PRs and offering assistance anytime I needed it.
