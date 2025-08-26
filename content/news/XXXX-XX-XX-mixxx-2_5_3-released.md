@@ -25,7 +25,7 @@ The conversion from timecode signal to actual timeframe is handled by the [xwax]
 
 In [PR #15194](https://github.com/mixxxdj/mixxx/pull/15194) developers have replaced the Alpha-Beta Filter with a more advanced [Kalman-Filter](https://en.wikipedia.org/wiki/Kalman_filter) equivalent. Kalman-Filters are generally used in GPS navigation and weather forecast models.
 
-The use of it in DVS in short: a Kalman filter maintains a model of the vinyl to predict the current pitch. This predicted pitch is compared with the noisy crackling input signal. The deviation [^2] determines the trust which is used to incorporated these values into the model for the next prediction.
+The use of it in DVS in short: a Kalman-Filter filter maintains a model of the vinyl to predict the current pitch. This predicted pitch is compared with the noisy crackling input signal. The deviation [^2] determines the trust which is used to incorporated these values into the model for the next prediction. It reuses the current constant velocity model of the original Alpha-Beta Filter.
 
 If the vinyl is, say, spinning at 33 1/3 r/min, that value is used as the initial assumption on which the next prediction is based. If the next measurement returns 40 r/min, the value is not fully trusted, because such a high acceleration is unlikely. This measurement will be used with a low trust. However, if the following measurements detect 40 r/min as well, the filter gradually adjusts to to approximate 40 r/min in further predictions.
 
