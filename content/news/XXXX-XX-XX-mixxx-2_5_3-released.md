@@ -15,12 +15,12 @@ Have a nice Mixxx.
 
 #### Digital Vinyl System - Timecode System.
 
-An introduction to Digital Vinyl Systems and timecode can be found in [this article on the site of Digital DJ Tips](https://www.digitaldjtips.com/a-beginners-guide-to-digital-vinyl-systems/), and in our own news archive: [How Does Timecode Vinyl Actually Work? (Pt. 1)](https://mixxx.org/news/2021-11-21-dvs-internals-pt1/) and [How Does Timecode Vinyl Actually Work? (Pt. 2)](https://mixxx.org/news/2021-12-22-dvs-internals-pt2/).
+An introduction to Digital Vinyl Systems and timecode can be found in [this article on the site of Digital DJ Tips](https://www.digitaldjtips.com/a-beginners-guide-to-digital-vinyl-systems/), and in our own news archive: [How Does Timecode Vinyl Actually Work? (Pt. 1)]({filename}/news/2021-11-21-dvs-internals-pt1.md) and [How Does Timecode Vinyl Actually Work? (Pt. 2)]({filename}/news/2021-12-22-dvs-internals-pt2.md).
 
-To summarize, Mixxx plays the song by following the signal on the timecode media, which gets internally converted to actual timeframes via the LUT.
+To summarize, Mixxx plays the song by following the signal on the timecode media, which gets internally converted to actual timeframes via a lookup table (LUT).
 So the DJ controls the playback of the digital music by manipulating vinyl or CDs.
 
-In order to create a vinyl-like feeling the song needs to follow the signal as closely as possible (low latency, fast responsiveness) for e.g. scratching or backspins. There is no 'standard' signal - each manufacturer uses its own code. The demodulated code from the signal needs to be converted to a usable timecode. This is realized by storing the states of the code in a LUT (lookup table) which is mapped to instants in time in the song. This makes it possible to quickly jump to positions in time during playback.
+In order to create a vinyl-like feeling the song needs to follow the signal as closely as possible (low latency, fast responsiveness) for e.g. scratching or backspins. There is no 'standard' signal - each manufacturer uses its own code. The demodulated code from the signal needs to be converted to a usable timecode. This is realized by storing the states of the code in a LUT which is mapped to instants in time in the song. This makes it possible to quickly jump to positions in time during playback.
 The conversion from timecode signal to actual timeframe is handled by the [xwax](https://xwax.org/overview.html) library. To detect the pitch of the signals (e.g. the playback speed) xwax uses an [Alpha-Beta Filter](https://en.wikipedia.org/wiki/Alpha_beta_filter).
 
 In [PR #15194](https://github.com/mixxxdj/mixxx/pull/15194) developers have replaced the Alpha-Beta Filter with a more advanced [Kalman-Filter](https://en.wikipedia.org/wiki/Kalman_filter) equivalent. Kalman-Filters are generally used in GPS navigation and weather forecast models.
@@ -31,12 +31,12 @@ If the vinyl is, say, spinning at 33 1/3 r/min, that value is used as the initia
 
 By using this model, Mixxx is able to properly and more accurately represent e.g. the pitch control slider on the turntable or CD-player.
 
-Another improvement has been made to the measurements which are fed to the Kalman-Filter [PR 15217](https://github.com/mixxxdj/mixxx/pull/15217). The current model only takes rough measurements of the position on the sine wave. Furthermore these measurements work on the assumption to always be correct. A new check was added to detect if measurements were skipped or larger than assumed. This improves backspins where the deviation of estimation and measurement suddenly become very high.
+Another improvement has been made to the measurements which are fed to the Kalman filter [PR #15217](https://github.com/mixxxdj/mixxx/pull/15217). The current model only takes rough measurements of the position on the sine wave. Furthermore these measurements work on the assumption to always be correct. A new check was added to detect if measurements were skipped or larger than assumed. This improves backspins where the deviation of estimation and measurement suddenly become very high.
 
 These changes are major improvements for all DVS users. Too good to wait for Mixxx 2.6.  
-Get all Mixxx-ed up and join our [testing-force](https://mixxx.org/get-involved/) for more upcoming features.
+Get all Mixxx-ed up and join our [testing-force]({filename}/pages/get-involved.md) for more upcoming features.
 
-[^2]: The Deviation in Kalman filters is called [Innovation](https://en.wikipedia.org/wiki/Innovation_(signal_processing).
+[^2]: The Deviation in Kalman filters is called [Innovation](https://en.wikipedia.org/wiki/Innovation_(signal_processing)).
 
 ### Controller Mappings
 
