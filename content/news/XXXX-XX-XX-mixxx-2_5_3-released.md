@@ -49,5 +49,5 @@ Mappings were updated for
 
 #### 2.5.3 Changelog
 
-More fixes have been included to keep everything stable, up and running. 
+More fixes have been included to keep everything stable, up and running.
 The complete changelog can be found [here](https://github.com/mixxxdj/mixxx/blob/2.5.3/CHANGELOG.md)
