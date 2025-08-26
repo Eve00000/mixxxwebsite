@@ -42,6 +42,7 @@ Get all Mixxx-ed up and join our [testing-force](https://mixxx.org/get-involved/
 ### Controller Mappings
 
 Mappings were updated for
+
 * Icon P1-Nano MIDI 1
 * Traktor Kontrol S4 Mk3
 * Traktor Kontrol S3
