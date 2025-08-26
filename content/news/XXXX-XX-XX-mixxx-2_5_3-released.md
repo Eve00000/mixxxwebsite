@@ -1,5 +1,5 @@
 title: Mixxx 2.5.3 Released
-authors: Evelynne Veys
+authors: Evelynne Veys, Jan Claußen
 tags: 2.5.3, release announcement
 comments: yes
 status: draft
@@ -25,13 +25,13 @@ The conversion from timecode signal to actual timeframe is handled by the [xwax]
 
 In [PR #15194](https://github.com/mixxxdj/mixxx/pull/15194) developers have replaced the Alpha-Beta Filter with a more advanced [Kalman-Filter](https://en.wikipedia.org/wiki/Kalman_filter) equivalent. Kalman-Filters are generally used in GPS navigation and weather forecast models.
 
-The use of it in DVS in short: a Kalman-Filter filter maintains a model of the vinyl to predict the current pitch. This predicted pitch is compared with the noisy crackling input signal. The deviation [^2] determines the trust which is used to incorporated these values into the model for the next prediction. It reuses the current constant velocity model of the original Alpha-Beta Filter.
+The use of it in DVS in short: a Kalman-Filter maintains a model of the vinyl to predict the current pitch. This predicted pitch is compared with the noisy crackling input signal. The deviation [^2] determines the trust which is used to incorporate these values into the model for the next prediction. It reuses the current constant velocity model of the original Alpha-Beta Filter.
 
 If the vinyl is, say, spinning at 33 1/3 r/min, that value is used as the initial assumption on which the next prediction is based. If the next measurement returns 40 r/min, the value is not fully trusted, because such a high acceleration is unlikely. This measurement will be used with a low trust. However, if the following measurements detect 40 r/min as well, the filter gradually adjusts to to approximate 40 r/min in further predictions.
 
 By using this model, Mixxx is able to properly and more accurately represent e.g. the pitch control slider on the turntable or CD-player.
 
-Another improvement has been made to the measurements which are fed to the Kalman filter [PR 15217](https://github.com/mixxxdj/mixxx/pull/15217). The current model only takes rough measurements of the position on the sine wave. Furthermore these measurements work on the assumption to always be correct. A new check was added to detect if measurements were skipped or larger than assumed. This improves backspins where the deviation of estimation and measurement suddenly become very high.
+Another improvement has been made to the measurements which are fed to the Kalman-Filter [PR 15217](https://github.com/mixxxdj/mixxx/pull/15217). The current model only takes rough measurements of the position on the sine wave. Furthermore these measurements work on the assumption to always be correct. A new check was added to detect if measurements were skipped or larger than assumed. This improves backspins where the deviation of estimation and measurement suddenly become very high.
 
 These changes are major improvements for all DVS users. Too good to wait for Mixxx 2.6.  
 Get all Mixxx-ed up and join our [testing-force](https://mixxx.org/get-involved/) for more upcoming features.
