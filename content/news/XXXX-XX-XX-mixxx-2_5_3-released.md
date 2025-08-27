@@ -15,7 +15,7 @@ Have a nice Mixxx.
 
 #### Digital Vinyl System - Timecode System.
 
-An introduction to Digital Vinyl Systems and timecode can be found in [this article on the site of Digital DJ Tips](https://www.digitaldjtips.com/a-beginners-guide-to-digital-vinyl-systems/), and in our own news archive: [How Does Timecode Vinyl Actually Work? (Pt. 1)]({filename}/news/2021-11-21-dvs-internals-pt1.md) and [How Does Timecode Vinyl Actually Work? (Pt. 2)]({filename}/news/2021-12-22-dvs-internals-pt2.md).
+An introduction to Digital Vinyl Systems and timecode can be found in [this article on the site of Digital DJ Tips](https://www.digitaldjtips.com/a-beginners-guide-to-digital-vinyl-systems/), and in our own news archive: [How Does Timecode Vinyl Actually Work? (Pt. 1)]({filename}/news/2021-11-21-dvs-internals-pt1.md), [How Does Timecode Vinyl Actually Work? (Pt. 2)]({filename}/news/2021-12-22-dvs-internals-pt2.md) and [How Does Timecode Vinyl Actually Work? (Pt. 3)]({filename}/news/2025-08-27-dvs-internals-pt3.md).
 
 To summarize, Mixxx plays the song by following the signal on the timecode media, which gets internally converted to actual timeframes via a lookup table (LUT).
 So the DJ controls the playback of the digital music by manipulating vinyl or CDs.
@@ -38,7 +38,7 @@ Get all Mixxx-ed up and join our [testing-force]({filename}/pages/get-involved.m
 
 [^2]: The Deviation in Kalman filters is called [Innovation](https://en.wikipedia.org/wiki/Innovation_(signal_processing)).
 
-### Controller Mappings
+#### Controller Mappings
 
 Mappings were updated for
 
