@@ -1,8 +1,8 @@
 title: "How Does Timecode Vinyl Actually Work? (Pt. 3)"
 authors: Jan Claußen
 tags: traktor, timecode, dvs, vinyl control
-status: draft
 math: yes
+date: 2025-08-27 11:54:12
 
 Since its release in 2011, the **Traktor Control Vinyl MK2** has sparked
 curiosity among digital DJs and audio developers alike. Its timecode format
