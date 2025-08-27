@@ -89,7 +89,14 @@ PLUGINS = [
     "download_metadata",
     "draft_override",
     "md_yaml",
+    "render_math",
 ]
+
+MATH_JAX = {
+    # Disable auto_insert because we insert our own MathJax3 <script> into the needed articles.
+    # This also means that any settings created here are not relayed to mathjax (see templates/article.html instead)
+    "auto_insert": False,
+}
 
 
 class MenuItem:
@@ -290,6 +297,10 @@ AUTHOR_METADATA = {
         "github": "sdv0001",
         "email": "g73o82d65n79@protonmail.ch",
         "tagline": "GSoC 2025 Contributor",
+    },
+    "Jan Claußen": {
+        "github": "jclsn",
+        "tagline": "Mixxx Contributor",
     },
 }
 
