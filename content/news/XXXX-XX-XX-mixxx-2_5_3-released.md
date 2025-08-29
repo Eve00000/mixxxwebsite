@@ -26,7 +26,7 @@ In [PR #15194](https://github.com/mixxxdj/mixxx/pull/15194) developers have repl
 
 Kalman-Filters have many application as GPS navigation and weather forecast models. In Mixxx the Kalman-Filter uses a [probabilistic](https://en.wikipedia.org/wiki/Probability) model of the vinyl movements to predict the velocity, very similar to the Alpha-Beta Filter. This predicted speed is compared with the noisy crackling input signal. The deviation [^2] is fed back into the filter and slightly alters its internal state for the next prediction.
 
-If the vinyl is, say, spinning at 33 1/3 r/min, that value is used as the initial assumption on which the next prediction is based. If the next measurement returns 40 r/min, the value is not fully trusted, because such a high acceleration is unlikely. This measurement will be used with a low trust. However, if the following measurements detect 40 r/min as well, the filter gradually adjusts to to approximate 40 r/min in further predictions.
+If the vinyl is, say, spinning at 33 1/3 r/min, that value is used as the initial assumption on which the next prediction is based. If the next measurement returns 40 r/min, the value is not fully trusted, because such a high acceleration is unlikely. This measurement will be used with a low trust. However, if the following measurements detect 40 r/min as well, the filter gradually adjusts to approximate 40 r/min in further predictions.
 
 By using this model, Mixxx is able to properly and more accurately represent e.g. the pitch control slider on the turntable or CD-player.
 
