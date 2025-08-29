@@ -17,13 +17,12 @@ Have a nice Mixxx.
 
 An introduction to Digital Vinyl Systems and timecode can be found in [this article on the site of Digital DJ Tips](https://www.digitaldjtips.com/a-beginners-guide-to-digital-vinyl-systems/), and in our own news archive: [How Does Timecode Vinyl Actually Work? (Pt. 1)]({filename}/news/2021-11-21-dvs-internals-pt1.md), [How Does Timecode Vinyl Actually Work? (Pt. 2)]({filename}/news/2021-12-22-dvs-internals-pt2.md) and [How Does Timecode Vinyl Actually Work? (Pt. 3)]({filename}/news/2025-08-27-dvs-internals-pt3.md).
 
-To summarize, Mixxx plays the song by following the signal on the timecode media, which gets internally converted to actual timeframes via a lookup table (LUT).
-So the DJ controls the playback of the digital music by manipulating vinyl or CDs.
+Mixxx plays the song by following the signal on the timecode media, which gets internally converted to actual timeframes. So the DJ controls the playback of the digital music by manipulating vinyl or CDs.
 
-In order to create a vinyl-like feeling the song needs to follow the signal as closely as possible (low latency, fast responsiveness) for e.g. scratching or backspins. There is no 'standard' signal - each manufacturer uses its own code. The demodulated code from the signal needs to be converted to a usable timecode. This is realized by storing the states of the code in a LUT which is mapped to instants in time in the song. This makes it possible to quickly jump to positions in time during playback.
-The conversion from timecode signal to actual timeframe is handled by the [xwax](https://xwax.org/overview.html) library. To detect the pitch of the signals (e.g. the playback speed) xwax uses an [Alpha-Beta Filter](https://en.wikipedia.org/wiki/Alpha_beta_filter).
+In order to create a vinyl-like feeling, the song needs to follow the signal as closely as possible (low latency, fast responsiveness) for e.g. scratching or backspins. There is no 'standard' signal - each manufacturer uses its own code. One thing all manufacturers have in common is that the code is modulated onto a sine wave. The code is used for absolute positions e.g. after needle drops, but it is not suitable to handle pitch (e.g. the playback speed) or playback direction. For this the sine wave needs to be processed by a filter that detects phase differences and converts it into pitch information. 
 
-In [PR #15194](https://github.com/mixxxdj/mixxx/pull/15194) developers have replaced the Alpha-Beta Filter with a more advanced [Kalman-Filter](https://en.wikipedia.org/wiki/Kalman_filter) equivalent. Kalman-Filters are generally used in GPS navigation and weather forecast models.
+Mixxx has integrated the [xwax](https://xwax.org/overview.html) library for timecode support, which uses an [Alpha-Beta Filter](https://en.wikipedia.org/wiki/Alpha_beta_filter) for pitch detection. This filter provides a good feeling during scratching, but isn't able to provide a stable pitch during normal playback.
+In [PR #15194](https://github.com/mixxxdj/mixxx/pull/15194) developers have replaced the Alpha-Beta Filter with a more advanced [Kalman-Filter](https://en.wikipedia.org/wiki/Kalman_filter) equivalent.
 
 The use of it in DVS in short: a Kalman-Filter maintains a model of the vinyl to predict the current pitch. This predicted pitch is compared with the noisy crackling input signal. The deviation [^2] determines the trust which is used to incorporate these values into the model for the next prediction. It reuses the current constant velocity model of the original Alpha-Beta Filter.
 
