@@ -2,7 +2,7 @@ title: Mixxx 2.5.3 Released
 authors: Evelynne Veys, Jan Claußen
 tags: 2.5.3, release announcement
 comments: yes
-status: draft
+date: 2025-09-03 01:00:35
 
 #### Mixxx 2.5.3 Release Announcement: Back to School, back to DVS.
 
