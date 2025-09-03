@@ -157,7 +157,7 @@ caused by mechanical drift.
 
 Interestingly, the Traktor MK2 system also uses a [Linear Feedback Shift Register](https://en.wikipedia.org/wiki/Linear-feedback_shift_register) - but with different properties. While Serato’s LFSR has a
 **20-bit** length, Traktor’s uses a **110-bit** register with a minimum
-run length of two symbols. The generator polynomial of the the LFSR was found
+run length of two symbols. The generator polynomial of the LFSR was found
 by using the [Berlekamp-Massey algorithm](https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm).
 
 The number of unique states an LFSR can generate is:
@@ -175,7 +175,7 @@ $$n_{mk2} = 2^{110} -1 = 1.298 \cdot 10^{33} = 1\,298\,074\,214\,633\,706\,907\,
 That’s an astronomically high number-far beyond what’s required for this
 application.
 
-But how many states are actually needed?  With a 2500 Hz carrier, you get 2500 bits per second.<br>
+But how many states are actually needed? With a 2500 Hz carrier, you get 2500 bits per second.<br>
 
 For 12 minutes of timecode:
 
@@ -195,7 +195,7 @@ And for a 25-minute CD:
 
 $$4\,500\,000 \text{ states} \cdot 128 \text{ bit} = 576\,000\,000 \text{ bit} = 72\,000\,000 \text{ byte} = 68.66 \text{ MB}$$
 
-> **Disadvantage:** The memory footprint is large-even a single side of timecode can exceed 27 MB.
+> **Disadvantage:** The memory footprint is large - even a single side of timecode can exceed 27 MB.
 
 This makes storing a full lookup table impractical in production software.
 
