@@ -302,6 +302,11 @@ AUTHOR_METADATA = {
         "github": "jclsn",
         "tagline": "Mixxx Contributor",
     },
+    "Anmol Mishra": {
+        "github": "dhunstack",
+        "discourse": "dhunstack",
+        "tagline": "GSoC 2025 Contributor",
+    },
 }
 
 # Needed for Jinja2 markdown filter
