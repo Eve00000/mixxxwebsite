@@ -1,9 +1,9 @@
 title: GSOC 2025 - Converting Demucs v4 (Hybrid Transformer) AI model to ONNX format
 authors: Anmol Mishra
-status: draft
 tags: gsoc, gsoc-2025, stems
 math: yes
 comments: yes
+date: 2025-10-27 07:50:04
 
 Imagine loading any track in Mixxx and instantly isolating the vocals, drums, bass, or instruments **live**, in real time. This is the vision behind our [Google Summer of Code](https://summerofcode.withgoogle.com/programs/2025/projects/lRQpeA7K) 2025 project: "Converting Demucs v4 (Hybrid Transformer) AI model to ONNX format".
 
