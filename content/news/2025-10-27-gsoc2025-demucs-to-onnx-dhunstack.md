@@ -261,7 +261,24 @@ To evaluate the exported ONNX model, we developed benchmarking scripts for both 
 ## Benchmark Results
 
 The quality of the model is expected to be equal or slightly worse when exported to ONNX. While there are plenty of ways of measuring the benchmarks models (another blog post incoming), we've chosen to measure our models with `SI-SDR` metric, Scale Invariant Signal To Distortion Ratio, on the MusDB dataset. This is the standard metric on which researchers report their source separation model's performance.
-After export, the model's performance is nearly identical.
+
+We conducted comprehensive benchmarking on both CPU and GPU platforms, evaluating 50 tracks from the MusDB test dataset (approximately 3.46 hours of audio).
+
+#### CPU Performance Comparison
+
+| Metric | PyTorch Model | C++ ONNX Model | Improvement |
+|--------|---------------|----------------|-------------|
+| Total Processing Time | 5,380.35 sec | 4,415.30 sec | **17.94% faster** |
+| Processing Time for 1 min input | 25.89 sec | 21.24 sec | **17.94% faster** |
+
+#### GPU Performance Comparison
+
+| Metric | PyTorch Model (GPU) | Python ONNXRuntime (GPU) | Difference |
+|--------|---------------------|------------------|------------|
+| Total Processing Time | 354.13 sec | 386.40 sec | **8.35% slower** |
+| Processing Time for 1 min input | 1.70 sec | 1.86 sec | **8.35% slower** |
+
+#### Audio Quality Results
 
 | Stem         | PyTorch Model (dB) | ONNX Model (C++) (dB) |
 |--------------|--------------------|-----------------------|
@@ -274,6 +291,12 @@ After export, the model's performance is nearly identical.
 *Table: SI-SDR (dB) comparison for each stem and overall, using torchmetrics. Results are shown for the native PyTorch model and the exported ONNX model running in C++. Higher SI-SDR values indicate better separation quality (less distortion).*
 
 Typical high-performing models achieve around **7–9 dB** on vocals in the [MusDB](https://sigsep.github.io/datasets/musdb.html) benchmark - with 0 dB meaning no separation improvement over the original mixture.
+
+**Key Findings:**
+
+- **CPU Performance**: The C++ ONNX model delivers significant performance improvements (17.94% faster) while maintaining equivalent audio quality
+- **GPU Performance**: PyTorch maintains a performance advantage on GPU (8.35% faster), likely due to optimized CUDA implementations
+- **Audio Quality**: Both implementations produce nearly identical separation quality across all stems (< 0.1 dB difference)
 
 Now that we have a running platform independent high quality ONNX Demucs model that can utilize hardware acceleration and be deployed with C++, we plan to integrate this into Mixxx DJ for future.
 We've prepared example scripts for running the exported Demucs model, which can be used following the instructions documented in our READMEs.
