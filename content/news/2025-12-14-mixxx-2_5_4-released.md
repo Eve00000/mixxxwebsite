@@ -2,7 +2,7 @@ title: Mixxx 2.5.4 Released
 authors: Evelynne Veys
 tags: 2.5.4, release announcement
 comments: yes
-status: draft
+date: 2025-12-14 22:54:46
 
 #### Mixxx 2.5.4 Release Announcement: bundling improvements at the end of the year.
 
