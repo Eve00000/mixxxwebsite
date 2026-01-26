@@ -169,7 +169,7 @@ NAV_MENU = (
             ),
             MenuItem(
                 "/ev",
-                "Non-profit Association",
+                "Mixxx e.V.",
                 "Navigation bar link to Mixxx eV page.",
             ),
         ),
