@@ -167,6 +167,11 @@ NAV_MENU = (
                 "Get Involved",
                 "Navigation bar link to Mixxx Get Involved page.",
             ),
+            MenuItem(
+                "/ev",
+                "Non-profit Association",
+                "Navigation bar link to Mixxx eV page.",
+            ),
         ),
     ),
 )

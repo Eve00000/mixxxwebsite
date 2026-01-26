@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{% trans %}Registered Association (eingetragener Verein){% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="docs-section container">
+<h1>{% trans %}Registered Association{% endtrans %}</h1>
+<h2>{% trans %}(eingetragener Verein){% endtrans %}</h2>
+<p>{% trans %}Mixxx e.V. is a registered non-profit organization that represents Mixxx in legal and financial matters. Having a non-profit entity allows the Mixxx project to collect donations directly, take advantage of reduced fees for certain services, and shields individual members from legal liability.{% endtrans %}</p>
+
+<div id="nonprofit" class="docs-section">
+  <div>
+    <h6 class="docs-header">{% trans %}Mixxx Development Team and Mixxx e.V.{% endtrans %}</h6>
+    <p>{% trans %}The Mixxx e.V. is separate from the Mixxx Development Team and does not dictate technical direction or product decisions made by the Mixxx Developers. In practice, the e.V. members are drawn from the Mixxx Developer community.{% endtrans %}</p>
+  </div>
+  <div class="grid-container halves u-align-left">
+    <div>
+      <h5><a class="headline-link" href="#association">{% trans %}Purpose of Association{% endtrans %}</a></h5>
+      <p>{% trans %}Founded in 2025, The Association's officially described purpose is to promote art and culture as well as education and occupational training. The Association provides artists with the basic building blocks for DJ performances on a free and open source basis and advises them on the basics of digital DJ-ing as well as the implementation of unique extensions necessary for their personal artistic style. It also educates software developers in digital sound processing and online collaboration. For these purposes, it promotes and distributes free and open source DJ software, particularly the <strong>Mixxx DJ Software</strong>. This gives artists equal opportunities to start with digital DJ-ing regardless of financial means and allows software developers to review implementation details and contribute changes.{% endtrans %}</p>
+    </div>
+    <div>
+      <h5><a class="headline-link" href="#association">{% trans %}Association Goals{% endtrans %}</a></h5>
+      <p>{% trans %}The association aims to:{% endtrans %}</p>
+      <ul>
+        <li>{% trans %}Distribute Mixxx as a free and open source software to support educational, artistic, and cultural purposes.{% endtrans %}</li>
+        <li>{% trans %}Create manuals and guides to aid learning of digital DJing and further development.{% endtrans %}</li>
+        <li>{% trans %}Organize user support and education programs.{% endtrans %}</li>
+        <li>{% trans %}Offer software development internships for students who are mentored by experienced association members.{% endtrans %}</li>
+        <li>{% trans %}Build and maintain an inclusive and diverse community that supports the purpose of the association and welcomes contributors of all backgrounds, genders and ability levels beyond the members of the association.{% endtrans %}</li>
+        <li>{% trans %}The association provides the communication platforms and tools to promote collaboration and creativity and to enable easy access.{% endtrans %}</li>
+        <li>{% trans %}Support the development of Mixxx without exercising control over details unrelated to the association's rules and purpose.{% endtrans %}</li>
+        <li>{% trans %}Support the authorities with expertise in the DJ hardware and software environment (for instance in competition inquiries).{% endtrans %}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid-container halves u-align-left">
+    <div>
+      <h5><a class="headline-link" href="#association">{% trans %}Members{% endtrans %}</a></h5>
+      <p>{% trans %}The members of Mixxx e.V. are:{% endtrans %}</p>
+      <ul>
+        <li>Owen Williams: Chairperson</li>
+        <li>Jörg Wartenberg: Second Chairperson</li>
+        <li>Daniel Schürmann: Treasurer</li>
+      <ul>
+    </div>
+    <div>
+      <h5><a class="headline-link" href="#association">{% trans %}Articles of Association{% endtrans %}</a></h5>
+      <p>{% trans %}The text for the articles of association are <a href="https://github.com/mixxxdj/proposals/blob/main/proposals/2024-06-14_mixxx_e_v.md">on our Proposals Github repositorty</a>.{% endtrans %}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
