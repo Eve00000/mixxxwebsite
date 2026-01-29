@@ -60,7 +60,7 @@ html.transition-theme *:after {
     shape-outside: url('/theme/images/ev/umbrella.png');
     shape-margin: 2rem;
     margin-left: 2rem;
-    margin-top: -120px;
+    margin-top: 60px;
     margin-right: -120px;
 }
 
