@@ -51,6 +51,19 @@ html.transition-theme *:after {
     padding-bottom: 4rem;
     margin-bottom: 0;
 }
+
+#ev-umbrella {
+    width: 384px;
+    max-width: 384px;
+    height: auto;
+    float: right;
+    shape-outside: url('/theme/images/ev/umbrella.png');
+    shape-margin: 2rem;
+    margin-left: 2rem;
+    margin-top: -120px;
+    margin-right: -120px;
+}
+
 ul {
     margin-left: 2rem;
 }
