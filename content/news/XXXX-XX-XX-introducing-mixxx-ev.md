@@ -39,6 +39,12 @@ After extensive discussion and collaboration on the Articles of Association, we 
 - **Jörg Wartenberg**: Second Chairperson
 - **Daniel Schürmann**: Treasurer
 
+## Donating to Mixxx
+
+With Mixxx e.V. established, we now have more options for accepting donations from our community. We continue to maintain our [OpenCollective fundraising page](https://opencollective.com/mixxx) for donations in US dollars. Additionally, Mixxx e.V. now has a dedicated Euro bank account and [PayPal account](https://paypal.com/?????), allowing supporters to donate directly to the organization.
+
+Users are welcome to donate via either method depending on their preferred currency and payment method. All donations go toward supporting the development of Mixxx, maintaining our infrastructure, and funding community initiatives like internships and educational programs.
+
 ## Our Vision
 
 We believe that music, creativity, and technology should be accessible to everyone, not locked behind costly subscription models or high tuition fees. Mixxx e.V. enables us to:
