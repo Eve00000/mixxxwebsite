@@ -3,7 +3,6 @@ authors: Evelynne Veys
 status: draft
 tags: Robert, Kaye, Mayhem, MusicBrainz, MetaBrainz
 comments: yes
-
 summary: Robert Kaye, In Memoriam.
 
 With deep regrets we need to announce that the world of free and open-source software, the community of music lovers has lost a visionary, a pioneer and active member.
