@@ -1,5 +1,5 @@
 title: "Google Summer of Code 2026, Up-Mixxx your skills with Google"
-authors: Daniel Schürmann
+authors: Daniel Schürmann, Evelynne Veys
 tags: gsoc, gsoc-2026
 comments: yes
 status: draft
