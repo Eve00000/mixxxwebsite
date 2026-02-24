@@ -2,8 +2,8 @@ title: "Google Summer of Code 2026, Up-Mixxx your skills with Google"
 authors: Daniel Schürmann, Evelynne Veys
 tags: gsoc, gsoc-2026
 comments: yes
-status: draft
 summary: Mixxx has been [accepted as a mentoring organization](https://summerofcode.withgoogle.com/programs/2026/organizations/mixxx) for [Google Summer of Code 2026](https://summerofcode.withgoogle.com/), a global program focused on bringing new contributors into open source software development. This is a great opportunity for us to attract new contributors, as they will receive a stipend sponsored by Google.
+date: 2026-02-24 16:19:24
 
 We're very proud to announce that Mixxx has been accepted again this year as a [mentoring organization](https://summerofcode.withgoogle.com/programs/2025/organizations/mixxx) for [Google Summer of Code 2026](https://summerofcode.withgoogle.com/), a global program focused on bringing new contributors into open source software development. This means we are ready to welcome candidates and guide them with their first step^s in open source software and through the process of developing a sound proposal. We then devote all our energy to supporting the selected and accepted candidates, hoping their proposals will be successful. Again this is a great opportunity for us to attract new contributors, as they will receive a stipend sponsored by Google.
 More info about past GSoC projects can be found in other [News-posts](https://mixxx.org/news/), eg. about the 2025 project of Anmol:  [Converting Demucs v4 (Hybrid Transformer) AI model to ONNX format](https://mixxx.org/news/2025-10-27-gsoc2025-demucs-to-onnx-dhunstack/).
