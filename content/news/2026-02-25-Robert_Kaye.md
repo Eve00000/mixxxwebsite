@@ -1,9 +1,9 @@
 title: "Robert Kaye, Mayhem, In Memoriam"
 authors: Evelynne Veys
-status: draft
 tags: Robert, Kaye, Mayhem, MusicBrainz, MetaBrainz
 comments: yes
 summary: Robert Kaye, In Memoriam.
+date: 2026-02-25 12:35:35
 
 With deep regrets we need to announce that the world of free and open-source software, the community of music lovers has lost a visionary, a pioneer and active member.
 
