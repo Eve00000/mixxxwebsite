@@ -2,8 +2,8 @@ title: Mixxx 2.5.6 Released
 authors: Antoine Colombier
 tags: 2.5.6, release announcement
 comments: yes
-status: draft
 #### Mixxx 2.5.6 Release Announcement
+date: 2026-03-27 18:39:58
 
 We're proud to announce a new stable release of Mixxx: version 2.5.6. This version contains updates and fixes for issues, as well as improvements to effects, controller mappings, and overall stability. This should be the last 2.5 release.
 Note that this version is the successor of version 2.5.4 because version 2.5.5 has been skipped following an issue in the release workflow.
