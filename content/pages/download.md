@@ -4,8 +4,8 @@ template: pages/download
 versions:
   stable:
     name: 2.5.6
-    release_announcement: /news/2025-12-14-mixxx-2_5_5-released/
-    download_manifest: https://downloads.mixxx.org/releases/2.5.4/manifest.json
+    release_announcement: /news/2026-03-27-mixxx-2_5_6-released/
+    download_manifest: https://downloads.mixxx.org/releases/2.5.6/manifest.json
     downloads:
       - slug: windows
         os: Windows 10 build 1809 or later
