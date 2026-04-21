@@ -17,7 +17,7 @@ It is always a challenge to find and keep contributors. Official recognition wou
 
 [The Petition:](https://www.ehrenamt-opensource.de/en/)
 
-The petition "Recognition of Work on Open-Source as Volunteering in Germany" aims to change the law so that Open-Source contributors finally get the respect they deserve.
+The petition "Recognition of Work on Open-Source as Volunteering in Germany" aims to change the law so that Open-Source contributors finally get the respect they deserve. We believe this petition sends an important message by urging the government to recognize the contribution of thousands of German open source developers, not just those working on Mixxx.
 
 The organizers have extended the petition until November 23, 2026. This gives us more time to reach the goal of 30,000 signatures. Let’s help make it happen!
 
