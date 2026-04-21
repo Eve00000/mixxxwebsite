@@ -2,8 +2,8 @@ title: Petition, recognition of open-source work
 authors: Daniel Schürmann
 tags: Ehrenamt
 summary: We are calling on you to support the petition, Recognition of Work on Open-Source as Volunteering in Germany
-status: draft
 comments: yes
+date: 2026-04-21 14:01:13
 
 We are proud to provide our outstanding DJ software, Mixxx, as free and open-source software. Behind the screens, there is and has been a lot of hard work done over the years. Mixxx has been built by hundreds of people who spend their free time coding, testing, fixing bugs, and helping each other.
 Through Mixxx, our contributors promote art and culture as well as education and occupational training. This is the officially recognized purpose of our non-profit organization, Mixxx e.V., based in Germany.
