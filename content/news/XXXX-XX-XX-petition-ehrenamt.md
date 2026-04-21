@@ -8,7 +8,7 @@ comments: yes
 We are proud to provide our outstanding DJ software, Mixxx, as free and open-source software. Behind the screens, there is and has been a lot of hard work done over the years. Mixxx has been built by hundreds of people who spend their free time coding, testing, fixing bugs, and helping each other.
 Through Mixxx, our contributors promote art and culture as well as education and occupational training. This is the officially recognized purpose of our non-profit organization, Mixxx e.V., based in Germany.
 
-However, there is a problem, Developing Open Source software itself is not yet officially recognized as "volunteering" (Ehrenamt).
+However, there is a problem, Developing Open Source software itself is not yet officially recognized as "volunteering".
 
 In Germany, we call this "Ehrenamt", which literally translates to an "office of honor". It means more than just volunteering. It is an official role where you serve the public good, and the state honors that contribution with special rights and respect. If you coach a football team, for instance, your work is visible and recognized by society. The state ensures you are covered by insurance and allows you to receive a small tax-free volunteer allowance (Ehrenamtspauschale).
 Currently, we cannot easily use these tools for our developers because "Open Source contribution" is not yet on the official list for these benefits.
