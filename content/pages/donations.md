@@ -10,7 +10,7 @@ But if you’re unable to contribute your time, we also appreciate financial don
 
 The [Mixxx e.V.](https://mixxx.org/ev/) runs this website and is the publisher of the Mixxx DJ Software.
 
-Mixxx e.V. is a registered association according to German law. Mixxx e.V. is recognized by the German authorities as a **non-profit organization**, and therefore donations to Mixxx e.V. are **tax-deductible** in 🇩🇪 Germany.
+Mixxx e.V. is a registered association according to German law and recognized as a **non-profit organization** by the German authorities, therefore donations to Mixxx e.V. are **tax-deductible** in 🇩🇪 Germany.
 In all other states of the European Economic Area (EEA) (🇪🇺 EU member states, 🇮🇸 Iceland, 🇱🇮 Liechtenstein and 🇳🇴 Norway), Mixxx e.V. is treated on an equal footing with national non‑profit organizations. Please check with your local tax authority to see whether this allows for tax deduction.
 
 Donations are used in accordance with the [Articles of Association](https://github.com/mixxxdj/proposals/blob/main/proposals/2024-06-14_mixxx_e_v.md) to promote art and culture as well as education and occupational training via the free and open-source software Mixxx.
