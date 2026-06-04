@@ -11,15 +11,21 @@ As Mixxx paves the way toward the landmark 3.0 release, transitioning its user i
 
 ---
 
-## Why LateNight & Why QML?
+## Why QML?
 
-For years, **LateNight** has been a favorite for DJs performing in low-light environments. Its clean, dark layout, compact decks, and highly functional stacked waveforms make it both practical and visually appealing. However, the legacy skin system is driven by complex XML and QSS (Qt Style Sheets), which can be difficult to maintain, lack native fluid animations, and do not scale gracefully on modern High-DPI screens or mobile/touchscreen devices.
+Mixxx's legacy skin system is driven by complex XML and QSS (Qt Style Sheets). It has served the project well, but it is increasingly difficult to maintain and does not naturally support the kind of responsive, animated, and scalable interface work expected from modern applications.
 
-By porting LateNight to native QML, we aim to achieve:
+By moving LateNight to native QML, we aim to achieve:
 
 1. **Modern Typography & Pixel-Perfect Scaling**: Dynamic scaling across 4K displays, retina screens, and touchscreen laptops.
 2. **Hardware-Accelerated Rendering**: Leveraging modern, native graphics APIs, specifically **Apple Metal** on macOS and **Microsoft DirectX** on Windows, instead of legacy OpenGL. This keeps the CPU free to focus entirely on real-time audio processing, while the GPU handles UI and waveform rendering.
 3. **Theme Extensibility**: Standardized, modular structure (`res/qml/themes/LateNight`) that other developers can use to construct their own custom layouts without duplicating core logic.
+
+## Why LateNight?
+
+For years, **LateNight** has been a favorite for DJs performing in low-light environments. Its clean, dark layout and compact decks make it practical during real performances, especially on laptops where DJs need transport controls, mixer controls, waveforms, and library access visible at the same time.
+
+That makes LateNight an ideal candidate for this port. It is familiar to many existing users, demanding enough to prove that QML can support a serious DJ workflow, and compact enough to complement the larger, touch-oriented direction of Mixxx's New UI.
 
 ---
 
@@ -31,38 +37,38 @@ An interesting distinction between the theme layouts is how they address screen 
 
 ## Strategic Scope Reduction for a Stable Release
 
-To ensure we deliver a reliable, fully functional skin by the end of this GSoC project, we have deliberately focused our scope. You might wonder why we are using a legacy library and legacy preferences bridge instead of a native QML implementation.
+The guiding constraint for this project is the 12-week GSoC timeline. Every technical decision has to balance ambition with the need to deliver something reliable, reviewable, and useful by the end of the program. That is why the project scope is deliberately focused on the LateNight QML skin itself, while avoiding large backend rewrites that would turn this into a separate infrastructure project.
 
-The main challenge with a fully native QML library is that it requires a new library backend. Because there is no clean separation between the legacy library backend and the legacy library widgets, we would have to rewrite the backend to support native QML. However, writing a new library backend is a massive, independent project on its own.
+A fully native QML library would require a new library backend. Today, the legacy library backend and legacy library widgets are tightly coupled, so replacing only the visual layer is not enough. Building that backend properly is important future work, but it is too large and too risky to combine with a 12-week theme port.
 
-We can't wait for a new backend to get completed before moving forward with QML and more importantly, we didn't want to risk your music library in the process! So, to keep moving forward with QML without holding the project back we chose a pragmatic middle ground: safely bridging the legacy C++ widgets into the QML viewport via our bridge. This keeps your library robust and completely usable from day one. This concept applies to preferences as well, which is why we are using a legacy preferences bridge for now, which is planned to be adapted to our skin as part of my project.
+Instead, we chose a pragmatic middle ground: safely bridging the existing C++ library widgets into the QML viewport. This lets the project move forward with QML while keeping the music library stable and fully usable from day one. The same reasoning applies to preferences: for now, the legacy preferences dialog is being bridged and adapted to the new skin, rather than replaced outright.
 
 ---
 
 ## Planned Project Steps
 
-To let the community know what work is currently planned, here are the main milestones for this project. **Note that our goal is to reuse the QML code from the New UI wherever possible**, as we are primarily building the LateNight-specific layout structures and styling, rather than implementing these widgets from scratch:
+To make the scope of the project clear, here are the main areas of work planned for the LateNight QML port. **Wherever possible, we will reuse components from Mixxx's New UI** and focus this project on the parts that make LateNight distinct: its compact layout, laptop-friendly workflow, and familiar visual structure.
 
-**Reusing & inheriting from the New UI**
+**Reusing components from the New UI**
 
-- **Decks & stacked waveforms**: Porting the compact LateNight deck layout structures while reusing native waveform rendering.
-- **Deck transport & parameters**: Wiring the play, cue, sync, loops, rates, hotcues, and beatgrid controls, sharing the New UI's QML logic wherever possible.
+- **Decks and stem waveforms**: Recreating LateNight's compact deck layout while reusing Mixxx's native QML waveform rendering, including the stacked waveform view for individual stems.
+- **Deck controls**: Connecting playback controls such as play, cue, sync, loops, pitch/rate controls, hotcues, and beatgrid tools using the shared QML logic already developed for the New UI.
 
-**Building shared infrastructure from scratch (benefiting both UIs)**
+**Building shared infrastructure**
 
-- **Effects, Sampler & Mic/Aux Racks**: Mounting the samplers and effects slots, reusing the New UI's expandable rack primitives.
+- **Effects, samplers, and Mic/Aux racks**: Integrating these sections in a way that can support both LateNight QML and the New UI, reducing duplicated work between skins.
 
-**LateNight-specific composition & layout**
+**LateNight-specific layout and integration**
 
-- **Legacy Library Bridge & Foundation**: Safely hosting the legacy C++ sidebar and track table inside the QML viewport (Completed).
-- **Adapted Legacy Preferences**: Adapting the legacy preferences bridge to the new skin.
-- **Channel Mixer**: Styling the EQ/filter columns, VU meters, and crossfader orientation controls by wrapping existing Mixer QML code.
-- **Layout Variants**: Designing compact and mini deck sizes specifically tailored for traditional laptop screen heights.
-- **Menu Bridge & Accessibility**: Bridging semantic QML menu actions to ensure native platform accessibility support.
+- **Legacy library bridge**: Hosting the existing C++ library sidebar and track table inside the QML viewport so the music library remains stable and usable while the QML transition continues. (Completed)
+- **Preferences integration**: Adapting the existing preferences dialog bridge for the LateNight QML skin.
+- **Channel mixer**: Styling EQ/filter controls, VU meters, and crossfader controls to match LateNight while reusing existing mixer logic.
+- **Layout variants**: Designing compact and mini deck layouts for traditional laptop screen heights.
+- **Menu and accessibility support**: Connecting menu actions and accessibility-related behavior so the skin remains usable across supported platforms.
 
 ---
 
-Ultimately, releasing this experimental LateNight QML skin in a 2.x release is just the beginning. Our goal is to give you a hands-on preview of what lies ahead: the plan for Mixxx 3.0 is to leverage powerful new QML capabilities, bringing completely re-written libraries, modern preference windows, fully custom hotcue layouts, and many more exciting visual and functional features as introduced in the [QML Project announcement](https://mixxx.org/news/2025-08-06-qml-project/).
+Ultimately, releasing this experimental LateNight QML skin in a 2.x release is just the beginning. Our goal is to give you a hands-on preview of what lies ahead: the plan for Mixxx 3.0 is to leverage powerful new QML capabilities, bringing a completely rewritten library, a modern preferences dialog, fully custom hotcue layouts, and many more exciting visual and functional features as introduced in the [QML Project announcement](https://mixxx.org/news/2025-08-06-qml-project/).
 
 ---
 
@@ -91,6 +97,7 @@ Follow these steps to run and test it:
    ```bash
    ./build/mixxx --developer
    ```
+   This flag is currently required to expose experimental QML skins during development, but it is planned to be removed once this workflow is ready for regular skin selection.
 2. **Enable the Skin**:
    Once Mixxx opens, navigate to:
    **Preferences -> Interface** and change the theme/skin to **LateNight QML (Experimental)**. You will have to restart Mixxx once to see the WIP QML skin.
