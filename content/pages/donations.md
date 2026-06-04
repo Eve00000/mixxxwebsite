@@ -15,7 +15,7 @@ In all other states of the European Economic Area (EEA) (🇪🇺 EU member stat
 
 Donations are used in accordance with the [Articles of Association](https://github.com/mixxxdj/proposals/blob/main/proposals/2024-06-14_mixxx_e_v.md) to promote art and culture as well as education and occupational training via the free and open-source software Mixxx.
 
-You can directly donate to Mixxx e.V. using the Open Collective platform: 👉 [https://OpenCollective.com/mixxxev](https://OpenCollective.com/mixxxev)
+You can directly donate to Mixxx e.V. using the Open Collective platform: 👉 [https://opencollective.com/mixxxev](https://opencollective.com/mixxxev)
 
 Open Collective has a manually adjustable **15% platform tip** preset. The most efficient way to donate using Open Collective is with a direct bank transfer. PayPal and credit cards are available, but deduct additional fees from your donation.
 
