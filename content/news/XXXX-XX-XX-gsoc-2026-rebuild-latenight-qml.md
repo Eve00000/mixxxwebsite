@@ -14,13 +14,13 @@ As a practical step toward that goal, I am developing a full QML port of the Lat
 
 ## Why QML?
 
-Mixxx's legacy skin system is driven by complex XML and QSS (Qt Style Sheets). It has served the project well, but it is increasingly difficult to maintain and does not naturally support the kind of responsive, animated, and scalable interface work expected from modern applications.
+Mixxx's legacy skin system is driven by complex XML and QSS (Qt Style Sheets) and generates thousands of QWidget instances at start-up, which takes a lot of time. This legacy skin system has served the project well, but it is increasingly difficult to maintain and does not naturally support the kind of responsive, animated, and scalable interface work expected from modern applications.
 
 By moving LateNight to native QML, we aim to achieve:
 
-1. **Modern Typography & Pixel-Perfect Scaling**: Dynamic scaling across 4K displays, retina screens, and touchscreen laptops.
+1. **Modern Typography & Pixel-Perfect Scaling**: Dynamic scaling across 4K displays, retina screens, and small screens such as Raspberry Pi setups.
 2. **Hardware-Accelerated Rendering**: Leveraging modern, native graphics APIs, specifically **Apple Metal** on macOS and **Microsoft DirectX** on Windows, instead of legacy OpenGL. This keeps the CPU free to focus on tasks like real-time audio processing and the application logic, while the GPU handles UI and waveform rendering.
-3. **Theme Extensibility**: Standardized, modular structure (`res/qml/themes/LateNight`) that other developers can use to construct their own custom layouts without duplicating core logic.
+3. **Theme Extensibility**: Standardized, modular structure (`res/skins/LateNightQML`) that other developers can use to construct their own custom layouts without duplicating core logic.
 
 ## Why LateNight?
 
