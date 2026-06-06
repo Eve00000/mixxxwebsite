@@ -7,7 +7,8 @@ summary: Introducing the Google Summer of Code 2026 project to port and rebuild 
 
 Hi everyone! I am Ayush Sah, and I am thrilled to share that I will be working with Mixxx for Google Summer of Code (GSoC) 2026. Over the next few months, my project will focus on one of the most exciting shifts in Mixxx’s user interface history: **rebuilding the iconic LateNight theme in native QML**.
 
-As Mixxx paves the way toward the landmark 3.0 release, transitioning its user interface to the ["New UI"](https://mixxx.org/news/2025-08-06-qml-project/) is a core priority. Built on [Qt Quick / QML](https://en.wikipedia.org/wiki/QML), this shift unlocks modern aesthetics, fluid layout customization, and vector-based scaling. My goal is to ensure that LateNight, arguably one of Mixxx's most popular skins, is fully ported to QML with perfect visual and functional parity, serving as a clean blueprint for future community-made QML themes.
+As Mixxx moves toward the 3.0 release, introducing the ["New UI"](https://mixxx.org/news/2025-08-06-qml-project/) which will be 100% based on [Qt Quick / QML](https://en.wikipedia.org/wiki/QML). This is a technology that unlocks modern aesthetics, fluid layout customization, and vector-based scaling.
+As a practical step toward that goal, I am developing a full QML port of the LateNight skin. It will deliver visual and functional parity with the classic design while providing a clean, real‑world reference for future community QML themes. This work aligns fully with the New UI effort, as both share the same underlying QML codebase.
 
 ---
 
@@ -18,7 +19,7 @@ Mixxx's legacy skin system is driven by complex XML and QSS (Qt Style Sheets). I
 By moving LateNight to native QML, we aim to achieve:
 
 1. **Modern Typography & Pixel-Perfect Scaling**: Dynamic scaling across 4K displays, retina screens, and touchscreen laptops.
-2. **Hardware-Accelerated Rendering**: Leveraging modern, native graphics APIs, specifically **Apple Metal** on macOS and **Microsoft DirectX** on Windows, instead of legacy OpenGL. This keeps the CPU free to focus entirely on real-time audio processing, while the GPU handles UI and waveform rendering.
+2. **Hardware-Accelerated Rendering**: Leveraging modern, native graphics APIs, specifically **Apple Metal** on macOS and **Microsoft DirectX** on Windows, instead of legacy OpenGL. This keeps the CPU free to focus on tasks like real-time audio processing and the application logic, while the GPU handles UI and waveform rendering.
 3. **Theme Extensibility**: Standardized, modular structure (`res/qml/themes/LateNight`) that other developers can use to construct their own custom layouts without duplicating core logic.
 
 ## Why LateNight?
@@ -35,7 +36,7 @@ An interesting distinction between the theme layouts is how they address screen 
 
 ---
 
-## Strategic Scope Reduction for a Stable Release
+## Scope Reduction for the GSoC timeframe
 
 The guiding constraint for this project is the 12-week GSoC timeline. Every technical decision has to balance ambition with the need to deliver something reliable, reviewable, and useful by the end of the program. That is why the project scope is deliberately focused on the LateNight QML skin itself, while avoiding large backend rewrites that would turn this into a separate infrastructure project.
 
@@ -51,12 +52,12 @@ To make the scope of the project clear, here are the main areas of work planned 
 
 **Reusing components from the New UI**
 
-- **Decks and stem waveforms**: Recreating LateNight's compact deck layout while reusing Mixxx's native QML waveform rendering, including the stacked waveform view for individual stems.
+- **Decks and stem waveforms**: Recreating LateNight's compact deck layout while reusing Mixxx's native QML waveform rendering, and providing controls for stems and beat-grid editing.
 - **Deck controls**: Connecting playback controls such as play, cue, sync, loops, pitch/rate controls, hotcues, and beatgrid tools using the shared QML logic already developed for the New UI.
 
 **Building shared infrastructure**
 
-- **Effects, samplers, and Mic/Aux racks**: Integrating these sections in a way that can support both LateNight QML and the New UI, reducing duplicated work between skins.
+- **Effects, samplers, and Mic/Aux racks**: Adding these missing QML elements in a way that can support both LateNight QML and the New UI, reducing duplicated work between skins.
 
 **LateNight-specific layout and integration**
 
