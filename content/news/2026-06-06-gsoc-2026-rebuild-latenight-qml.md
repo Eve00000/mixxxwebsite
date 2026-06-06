@@ -1,9 +1,9 @@
 title: "GSoC 2026: Rebuilding the LateNight Theme in QML"
 authors: Ayush Sah (arsenic)
-status: draft
 tags: gsoc, gsoc-2026, development, UI, QML, LateNight
 comments: yes
 summary: Introducing the Google Summer of Code 2026 project to port and rebuild Mixxx's beloved LateNight skin as a native, modern, and highly-performant QML theme.
+date: 2026-06-06 14:26:14
 
 Hi everyone! I am Ayush Sah, and I am thrilled to share that I will be working with Mixxx for Google Summer of Code (GSoC) 2026. Over the next few months, my project will focus on one of the most exciting shifts in Mixxx’s user interface history: **rebuilding the iconic LateNight theme in native QML**.
 
