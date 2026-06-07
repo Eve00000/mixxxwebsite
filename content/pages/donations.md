@@ -5,6 +5,14 @@ Mixxx is a non-profit project run by volunteers. The most valuable way to suppor
 
 But if you’re unable to contribute your time, we also appreciate financial donations. Your donation helps keep Mixxx independent, open-source, and free for DJs everywhere.
 
+  <div class="grid-container halves button-container">
+    <div>
+      <a class="button button-secondary-highlight" href="https://opencollective.com/mixxxev" target="_blank" title="Donate EUR to Mixxx e.V. via Open Collective">💶 Donate EUR 💶</a>
+    </div>
+    <div>
+      <a class="button button-secondary-highlight" href="https://opencollective.com/mixxx" target="_blank" title="Donate USD to Open Source Collective">💵 Donate USD 💵</a>
+    </div>
+  </div>
 
 ### 1. Mixxx e.V. 💶
 
