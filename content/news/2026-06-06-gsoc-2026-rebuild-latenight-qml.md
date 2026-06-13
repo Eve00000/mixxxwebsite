@@ -7,7 +7,7 @@ date: 2026-06-06 14:26:14
 
 Hi everyone! I am Ayush Sah, and I am thrilled to share that I will be working with Mixxx for Google Summer of Code (GSoC) 2026. Over the next few months, my project will focus on one of the most exciting shifts in Mixxx’s user interface history: **rebuilding the iconic LateNight theme in native QML**.
 
-As Mixxx moves toward the 3.0 release, introducing the ["New UI"](https://mixxx.org/news/2025-08-06-qml-project/) which will be 100% based on [Qt Quick / QML](https://en.wikipedia.org/wiki/QML). This is a technology that unlocks modern aesthetics, fluid layout customization, and vector-based scaling.
+As Mixxx moves toward the 3.0 release, we are introducing the ["New UI"](https://mixxx.org/news/2025-08-06-qml-project/), which will be 100% based on [Qt Quick / QML](https://en.wikipedia.org/wiki/QML). This is a technology that unlocks modern aesthetics, fluid layout customization, and vector-based scaling.
 As a practical step toward that goal, I am developing a full QML port of the LateNight skin. It will deliver visual and functional parity with the classic design while providing a clean, real‑world reference for future community QML themes. This work aligns fully with the New UI effort, as both share the same underlying QML codebase.
 
 ---
@@ -95,7 +95,7 @@ Follow these steps to run and test it:
 
 1. **Run Mixxx with the Developer Flag**:
    Launch your locally compiled Mixxx build from your terminal using the `--developer` flag:
-   ```bash
+   ```
    ./build/mixxx --developer
    ```
    This flag is currently required to expose experimental QML skins during development, but it is planned to be removed once this workflow is ready for regular skin selection.
