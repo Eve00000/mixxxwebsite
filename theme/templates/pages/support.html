@@ -10,14 +10,14 @@
     <div>
       <h5>{% trans %}User Manual{% endtrans %}</h5>
       <p>
-      {% with manual_latest_link="/manual/latest", manual_beginner_link="/manual/latest/chapters/djing_with_mixxx.html" %}{% trans %}The <a href="{{ manual_latest_link }}">Mixxx Manual</a> provides an overview of Mixxx's user interface, information about configuration and hardware, and much more. It also contains useful information for beginners under <a href="{{ manual_beginner_link }}">DJing with Mixxx</a>.{% endtrans %}{% endwith %}
+      {% with manual_latest_link="/manual/latest", manual_beginner_link="/manual/latest/chapters/djing_with_mixxx.html" %}{% trans %}The <a href="{{ SITEURL }}{{ manual_latest_link }}">Mixxx Manual</a> provides an overview of Mixxx's user interface, information about configuration and hardware, and much more. It also contains useful information for beginners under <a href="{{ SITEURL }}{{ manual_beginner_link }}">DJing with Mixxx</a>.{% endtrans %}{% endwith %}
       </p>
     </div>
 
     <div>
       <h5>{% trans %}Wiki{% endtrans %}</h5>
       <p>
-      {% with mixxx_wiki_link="/wiki/", beginner_dj_links="https://github.com/mixxxdj/mixxx/wiki/Beginner-Dj-Links", wiki_troubleshooting="https://github.com/mixxxdj/mixxx/wiki/Troubleshooting" %}{% trans %}The <a href="{{ mixxx_wiki_link }}">Mixxx Wiki</a> has a wealth of useful documentation for users and developers. New to it all and not sure how to get started? Checkout the <a href="{{ beginner_dj_links }}">Beginner DJ Links</a>. Running into technical issues? See the <a href="{{ wiki_troubleshooting }}">Troubleshooting</a> guide.{% endtrans %}{% endwith %}
+      {% with mixxx_wiki_link="/wiki/", beginner_dj_links="https://github.com/mixxxdj/mixxx/wiki/Beginner-Dj-Links", wiki_troubleshooting="https://github.com/mixxxdj/mixxx/wiki/Troubleshooting" %}{% trans %}The <a href="{{ SITEURL }}{{ mixxx_wiki_link }}">Mixxx Wiki</a> has a wealth of useful documentation for users and developers. New to it all and not sure how to get started? Checkout the <a href="{{ beginner_dj_links }}">Beginner DJ Links</a>. Running into technical issues? See the <a href="{{ wiki_troubleshooting }}">Troubleshooting</a> guide.{% endtrans %}{% endwith %}
       </p>
     </div>
 

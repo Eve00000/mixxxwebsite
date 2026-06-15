@@ -1,11 +1,11 @@
 #hardware.cover-bg {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/theme/images/cover/hardware-bg.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../images/cover/hardware-bg.jpg');
 }
 
 #library.cover-bg {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/theme/images/cover/library-bg.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../../images/cover/library-bg.jpg');
 }
 
 #broadcast.cover-bg {
-    background-image: url('/theme/images/cover/broadcast-bg.jpg');
+    background-image: url('../../images/cover/broadcast-bg.jpg');
 }

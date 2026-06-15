@@ -116,7 +116,7 @@
 <div id="news" class="docs-section container">
   <h2><a class="headline-link" href="#news">{% trans %}Latest News{% endtrans %}</a></h2>
   <p>
-  {% trans %}To see a list of all news and announcements, head over to <a href="{{ SITEURL }}/news">our news page</a> or subscribe to the <a href="{{ FEED_ATOM }}">Atom feed</a>.{% endtrans %}
+  {% trans %}To see a list of all news and announcements, head over to <a href="{{ SITEURL }}/news">our news page</a> or subscribe to the <a href="{{ SITEURL }}/{{ FEED_ATOM }}">Atom feed</a>.{% endtrans %}
   </p>
 
   <div class="grid-container halves u-align-left">
@@ -125,7 +125,7 @@
       <time>{{ article.locale_date }}</time>
       <h5>{{ article.title }}</h5>
       {{ article.summary }}
-      <a class="button button-secondary" href="{{ SITETURL }}/{{ article.url }}">{% trans %}Read More{% endtrans %}</a>
+      <a class="button button-secondary" href="{{ SITEURL }}/{{ article.url }}">{% trans %}Read More{% endtrans %}</a>
     </div>
     {% endfor %}
   </div>
@@ -140,7 +140,7 @@
   </p>
 
   <p>
-  {% with github_issues="https://github.com/mixxxdj/mixxx/issues/", mapping_link="https://github.com/mixxxdj/mixxx/wiki/Contributing-Mappings", create_a_branch_link="/get-involved#developers", help_with_translations_link="/get-involved#translators", starter_tasks_link="/get-involved" %}{% trans %}You can get involved with Mixxx today by <a href="{{ github_issues }}">reporting bugs and suggesting features</a>, <a href="{{ mapping_link }}">making a controller mapping</a>, <a href="{{ create_a_branch_link }}">adding features &amp; fixing bugs</a>, <a href="{{ help_with_translations_link }}">helping with translations</a>, or working on one of our other <a href="{{ starter_tasks_link }}">starter tasks</a>.{% endtrans %}{% endwith %}
+  {% with github_issues="https://github.com/mixxxdj/mixxx/issues/", mapping_link="https://github.com/mixxxdj/mixxx/wiki/Contributing-Mappings", create_a_branch_link="/get-involved#developers", help_with_translations_link="/get-involved#translators", starter_tasks_link="/get-involved" %}{% trans %}You can get involved with Mixxx today by <a href="{{ github_issues }}">reporting bugs and suggesting features</a>, <a href="{{ mapping_link }}">making a controller mapping</a>, <a href="{{ SITEURL }}{{ create_a_branch_link }}">adding features &amp; fixing bugs</a>, <a href="{{ SITEURL }}{{ help_with_translations_link }}">helping with translations</a>, or working on one of our other <a href="{{ SITEURL }}{{ starter_tasks_link }}">starter tasks</a>.{% endtrans %}{% endwith %}
   </p>
 </div>
 
