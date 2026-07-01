@@ -312,6 +312,10 @@ AUTHOR_METADATA = {
         "discourse": "dhunstack",
         "tagline": "GSoC 2025 Contributor",
     },
+    "Ayush Sah (arsenic)": {
+        "github": "xARSENICx",
+        "tagline": "GSoC 2026 Contributor",
+    },
 }
 
 # Needed for Jinja2 markdown filter
