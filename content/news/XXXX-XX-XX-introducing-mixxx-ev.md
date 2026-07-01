@@ -4,11 +4,11 @@ status: draft
 tags: announcement, community, mixxx e.v.
 comments: yes
 
-We are excited to announce the formation of **Mixxx e.V.** (eingetragener Verein), a nonprofit organization established to support and protect the Mixxx project and community. This marks an important milestone in Mixxx's journey as we continue our mission to make DJ software accessible to everyone.
+We are excited to announce the formation of **Mixxx e.V.**, a registered nonprofit association under German law established to support and protect the Mixxx project and community. This marks an important milestone in Mixxx's journey as we continue our mission to make DJ software accessible to everyone.
 
 ## What is Mixxx e.V.?
 
-Mixxx e.V. is a registered nonprofit association in Germany that serves as the legal body behind Mixxx DJ Software. The organization was founded in 2025 by Core development team members who recognized the need for a formal legal structure to better serve our growing community.
+Mixxx e.V. is a registered association (eingetragener Verein) that is recognized as nonprofit (gemeinnützig) by the German authorities. Mixxx e.V. serves as the legal body behind Mixxx DJ Software. The organization was founded in 2025 by Core development team members who recognized the need for a formal legal structure to better serve our growing community.
 
 Our officially stated purpose is to promote art, culture, education, and occupational training by:
 
@@ -22,6 +22,7 @@ Having a registered nonprofit entity brings several important benefits to the Mi
 
 - **Legal Protection**: The e.V. shields individual community members and contributors from legal liability
 - **Financial Transparency**: We can now collect donations directly and manage funds with proper accountability
+- **Tax-deductible donations**: Donations to Mixxx e.V. are tax-deductible in Germany and many other European countries
 - **Reduced Costs**: Nonprofit status allows us to take advantage of reduced fees for various services
 - **Community Support**: A formal structure helps us organize internships, educational programs, and user support initiatives
 
@@ -42,12 +43,7 @@ After extensive discussion and collaboration on the Articles of Association, we 
 ## Donating to Mixxx
 
 With Mixxx e.V. established, we now have more options for accepting donations from our community.
-We continue to maintain our [US-based OpenCollective fundraising page](https://opencollective.com/mixxx) for donations in US dollars.
-Additionally, Mixxx e.V. now has its own distinct [EU-based OpenCollective fundraising page](https://opencollective.com/mixxxev) that accepts donations in Euros.
-
-Donations to the US fundraiser will continue to directly fund development and promotion of Mixxx DJ Software, including purchasing hardware, funding appearances at conferences, and creating merchandise. Donations to the e.V. will also support Mixxx DJ Software in the same ways, and may additionally go to support any other efforts Mixxx e.V. pursues that promote its core mission.
-
-Anyone is welcome to donate to either organization depending on their preferred currency and payment method. All donations go toward supporting the development of Mixxx, maintaining our infrastructure, and funding community initiatives like internships and educational programs. Donating with a direct bank transfer can help avoid credit card processing fees and allow Mixxx to retain more of your donation.
+Please see our official [donations page](https://mixxx.org/donations/) for full details on how to support Mixxx monetarily.
 
 ## Our Vision
 
