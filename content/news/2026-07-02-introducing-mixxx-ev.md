@@ -1,8 +1,8 @@
 title: Introducing Mixxx e.V. - A Nonprofit Organization for the Community
 authors: Mixxx Development Team
-status: draft
 tags: announcement, community, mixxx e.v.
 comments: yes
+date: 2026-07-02 08:47:46
 
 We are excited to announce the formation of **Mixxx e.V.**, a registered nonprofit association under German law established to support and protect the Mixxx project and community. This marks an important milestone in Mixxx's journey as we continue our mission to make DJ software accessible to everyone.
 
