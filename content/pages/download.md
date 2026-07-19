@@ -191,7 +191,7 @@ versions:
 
           Then, install the development version Flatpak like this:
 
-              flatpak install mixxx org.mixxx.Mixxx nightly
+              flatpak install mixxx org.mixxx.Mixxx//nightly
 
           To run the development version Flatpak:
 
