@@ -172,6 +172,11 @@ NAV_MENU = (
                 "Mixxx e.V.",
                 "Navigation bar link to Mixxx eV page.",
             ),
+            MenuItem(
+                "https://shop.mixxx.org",
+                "Shop",
+                "Navigation bar link to our shop.",
+            ),
         ),
     ),
 )
