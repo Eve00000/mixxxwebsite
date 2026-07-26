@@ -58,10 +58,9 @@ We apologize if our communication did not reach you or was lost. You can still a
     - "25" (in English)
 (You can use a sample, part of the vocals from a song (e.g. extracted to stems, a recording of yourself, etc.)
 
-** To entertain the audience and avoid monotonous trance, techno, or disco sets, participants must use **2 tracks** whose original release dates differ by **at least 25 years** and whose original BPM difference is **at least 25 BPM** Both tracks must be audible and recognizable for at least 25 seconds.**
+**To entertain the audience and avoid monotonous trance, techno, or disco sets, participants must use <u>2 tracks</u> whose original release dates differ by <u>at least 25 years</u> and whose original BPM difference is <u>at least 25 BPM</u>. Both tracks must be audible and recognizable for at least 25 seconds.**
 
 **Example:** A techno track from 2015 with a BPM > 130 and a pop/disco/soul classic from before 1988 with a BPM < 105.
-
 
 ### Important Dates – Round 1
 
@@ -73,7 +72,7 @@ We apologize if our communication did not reach you or was lost. You can still a
 
 ## Round 2 – 25 candidates
 
-> (This round will be cancelled if there are fewer than 25 participants)*
+> This round will be skipped if there are fewer than 25 participants in the first round.  
 > Participants in the second round are the DJs whose videos are in the **top 25** of the votes after round 1.
 
 * Prepare a set of **maximum 8 minutes** and practice it. (videos with a duration of maximum 8:10 are accepted)
@@ -90,7 +89,6 @@ We apologize if our communication did not reach you or was lost. You can still a
 
 ## Round 3 – 10 finalists
 
-Prepare a set containing:
 * Prepare a set of **maximum 10 minutes** and practice it. (videos with a duration of maximum 10:10 are accepted)
 * The specific samples and tracks required for the final will be announced at the start of the voting round for round 2.
 * Because the time between submitting your mix for the final is limited, we recommend that you prepare a set as soon as the voting round for round 2 begins.
@@ -102,29 +100,30 @@ Prepare a set containing:
 * **Voting closes:** December 20th, 18:00 CET
 * **1 vote per community member**
 
-> A tie for first, second, and third place is possible.
+> A tie for first, second, and third place is possible.  
  If this is the case, we will take into account the results of round 2 and, if necessary, round 1 to determine the order in which the laureates can choose a prize. If this still results in a tie, we will look at the order in which the first video was submitted (date and time of receipt of the participation email).
 
 
-## How to Participate (Procedure for all rounds)
+## How to Participate (procedure for all rounds)
 
 ### 1. Make a video of your set
+
 * The **Mixxx GUI must be visible in full screen throughout the entire set**so that we can see (and monitor) your actions. See below for more information on creating videos that record your screen and audio.
 * You must perform **live** (no pre-recorded set).
-* Preferable: 1080p HD & HQ Audio.
+* Create your video preferable with 1080p HD and HQ Audio.
 * Mouse movements do not need to be visible (captured in the video).
 * Do **not** add subtitles, captions of titles to the video.
 * To ensure that the same video and audio compression is used for all participants' videos, we ask you to upload your video to **YouTube as a private video (unlisted, non-publicn)** (only visible to those with the link). Share the link with **no one other than Mixxx**. See below for more information on uploading a video to YouTube.
-* Example: Happy 25th Anniversary Mixxx (with an abundance of samples)
+* Example of the format we expect: Happy 25th Anniversary Mixxx (with an abundance of samples)
 
 @Video(https://www.youtube.com/watch?v=lIK-3mwuYeU)
 
-
 ### 2. Send an email to djcontest@mixxx.org containing:
+
 * Link to your video
-* Your first and last name
+* Your first and last name (we only need the addresses of the finalists to send their chosen prize)
 * Your DJ name and age (indicate whether we may mention your age)
-* A name for your set
+* A name for your set and a description
 * The timestamps where the required samples are audible  
     - in the example:
         - 'Mix'- or 'Mixxx'-sample: 0:21, 1:57, 1:59, 2:15, 2:17, 2:28, 2:30, 2:34, 2:36, 2:37, 2:57, 3:04, 3:05, 3:16, 3:17, 3:48, 3:49, 4:00, 4:04, 5:20  
@@ -134,7 +133,7 @@ Prepare a set containing:
         - The Beatles - Birthday (1968 / 139 Bpm)  
         - 50 Cent - In Da Club (2003 / 90 Bpm)  
 * The version of Mixxx you use (e.g., Mixxx 2.5.3)
-    - in the example: 2.6 beta
+    - in the example: 2.6 beta with some personal features
 * Your operating system and version (e.g., Ubuntu 24.04, Windows 10)
     - in the example: Windows 10
 * The controller you use (if applicable)
@@ -147,21 +146,22 @@ What (DJname) loves about DJing is ...
 (DJname) started using Mixxx (timedescription) and enjoys it especially because ...
 (DJname) titled this set as (settitle), and describes this set as (description).
 
+**Mixxx uses the collected information exclusively for the DJ competition; the collected personal information is not passed on or sold.**
 
+### 3. What we do with your submission
 
-### 3. What we will do next
-* Download your video
+* Download your video from YouTube
 * Add a *"25 Years of Mixxx"* intro and outro to your video
-* Add a description page & thumbnail containing:
-    - A number (the order we receive videos) for voting
+* Add a description page and thumbnail with:
+    - a number (the order in which we receive the videos) for the voting
     - Your DJ name (and age if permitted)
-    - We'll add the lines you wrote about yourself as info overlay on your videp.
-* Check if the video meets the requirements. We will mark (subtitle) the occurrences of the required samples and tracks.
+    - We add the text you wrote about yourself as information overlay to your videp.
+* Check if the video meets the requirements. We highlight (subtitle) the moments where the required samples and tracks appear.
+* Check whether the videos contain offensive language (including unintended combinations of examples); if so, they will be excluded.
+* We will send you one response after your video has been reviewed: approved or rejected (with the reason). We will not comment on the reasons.
 * Upload the video to the **Mixxx YouTube channel**
-* Prepare a voting topic on our **Discourse forum** and open it for voting on the correct date & time
-* Participants will be shown in the order we received their email with the video link, with **DJ Name, Set Name, and video link**
-
-
+* Create a voting topic on our **Discourse forum** and open it for voting on the correct date and time.
+* The participants are shown in the order in which we received their email with the video link, with **DJ name, set name, and video link**.
 
 ## Schedule Overview
 
@@ -179,22 +179,103 @@ What (DJname) loves about DJing is ...
 
 ## Rules & Agreements
 
-By participating in the *25 Years of Mixxx DJ Contest*, you agree to the following:
+By participating in the *25 Years of Mixxx Intergalactic DJ Contest*, you agree to the following:
 
-* Your video is **original** and created by yourself, no post-editing is permitted (adding effects or samples outside of Mixxx).
-* Your video was made **specifically** for this contest.
-* Your video will **not** be shared with anyone or any other organization besides Mixxx.
-* Mixxx may use (parts of) your video for publicity, as an example, or for explanation — in that case, we will always mention your DJ name.
+* Your video is **original** and created by yourself; post-production is not permitted (adding effects or samples outside of Mixxx).
+* Your video is **specifically** made for this contest.
+* Your video will **not** be shared with anyone or any organization other than Mixxx.
+* Mixxx may use (parts of) your video for publicity, as an example, or for clarification. During and after the competition. In that case, we will always mention your DJ name.
 * Your DJ name and video will be displayed on our discussion forum for voting.
-* The DJ names and videos of the finalists and winners will be included in news articles on [the Mixxx website](https://mixxx.org).
-* **Voting and ranking are done exclusively by the community** — the community votes for their favorites, in the first round, they need to vote for exactly 5 different participants, in the second round they need to vote for exactly 3 different participants and in the final every community member can only vote for 1 finalist.
-* During the voting no one can see intermediate results, the result will appear automatically at the moment the voting ends, during the vote the number of community members that voted will be indicated.
-* Videos containing offensive language (including from unintended sample combinations) will be excluded.
-* Some Jury members will check the videos against the requirements. If a video does not meet the requirements, it will **not** be selected without consultation.The Jury members will also check if the video does not contain post-editing (adding effects or samples outside of Mixxx) and if the videos contain no offensive or insulting language.
-* We hope all DJs behave fairly: this is a competition based on **skill and musical knowledge**, not a popularity contest.
-* Core Mixxx members reserve the right to disqualify participants due to misconduct.
-* If there are not enough participants, the second round may be skipped. In that case, after the first round, the final follows with the scheduled dates and 10 finalists.
-* If multiple participants share the last qualifying spot for the next round, **all** of them will advance.
+* The names and videos of the finalists and laureates will be included in news articles on [the Mixxx website](https://mixxx.org) and other Mixxx communication channels (with mention of the prizes won).
+* **Voting and ranking are done exclusively by the community** — the community votes for its favorites. In the first round, they must vote for exactly 5 different participants, in the second round for exactly 3 different participants, and in the final, each community member may vote for only 1 finalist.
+* During the voting rounds, no one can see the interim results. The final result will appear automatically once voting has ended (on the indicated date and time). During voting, the number of community members who voted will be displayed.
+* There will be no communication regarding the voting.
+* Videos containing offensive language (including unintended sample combinations) will be excluded.
+* A number of judges will review the videos based on the requirements. If a video does not meet the requirements, it will **not** be selected without consultation. The judges will also check whether the video contains any post-production (adding effects or samples outside of Mixxx) and whether the videos contain any offensive or abusive language.
+* We hope that all DJs behave fairly: this is a competition based on **skill, musical knowledge, and intuition**, not a popularity contest.
+* The core members of Mixxx reserve the right to disqualify participants for misconduct.
+* If there are not enough participants, the second round may be skipped. In that case, the final will follow the first round on the scheduled dates with 10 finalists.
+* If multiple participants share the last qualification spot for the next round, **they all** advance to the next round.
+* If a candidate does not submit a video on time for round 2 or for the final (date and time of receipt of the email), they will be disqualified.
+* Mixxx in no way wants to encourage DJs to violate copyright; on the contrary: "support artists, buy their music!"
+
+## Tips
+
+### How to create videos that record your screen and audio.
+
+With [OBS Studio (Open Broadcaster Software)](https://obsproject.com/) you can record screen and audio on Windows, macOS and Linux
+
+Some videos that clearly explain how to make a screen and audio recording with OBS:
+
+* Kevin Stratvert made [a tutorial video](https://www.youtube.com/watch?v=xoe9ZOzlfnQ).
+* XFaderz created a video on [How to PREPARE OBS for Recording Or Streaming Your DJ Set](https://www.youtube.com/watch?v=nQp0oA1CyzM), only use the screencapture part.
+
+#### A Short Manual to record a Mixxx DJ Session with OBS Studio  
+
+##### Video Source
+
+> Launch OBS Studio and either use the default scene or create a new one by clicking the + under the "Scenes" box.  
+Add a video source: Click the + under the "Sources" box, select "Display Capture" to record your entire computer screen, set Mixxx in full screen mode.
+
+##### Audio source & routing  
+
+##### Windows: Using e.g. a virtual cable
+> Depending on the sound API (e.g. Asio) you are using in Mixxx you may need to use a Virtual Audio Cable e.g. [VB-Cable](https://vb-audio.com/Cable/index.htm) to record the highest quality without latency or aches.  
+Configure Mixxx: Open Mixxx's preferences, go to the "Sound Hardware" tab, and set the "Master" output to the virtual cable (e.g., "CABLE Input").  
+Configure OBS: In OBS, go to Settings -> Audio. Set the "Desktop Audio" device to the same virtual cable (e.g., "CABLE Output"). This lets OBS "hear" the Mixxx output.  
+Monitor in OBS: To hear what you're recording, you can enable audio monitoring in OBS's Advanced Audio Properties, but be careful of audio feedback loops.
+
+##### Linux: Using JACK or PipeWire
+> On Linux, JACK or PipeWire offer the most robust and flexible solution for audio routing.  
+Start JACK before opening Mixxx and OBS.  
+Configure Mixxx: In Mixxx's audio preferences, set the "Master" output to "JACK."  
+Add a JACK Source in OBS: In your OBS scene, click the + in the Sources box and select "JACK Input Client".  
+Route Audio: Use a JACK patchbay tool like QJackCtl or Patchage. Connect Mixxx's audio output ports to the "OBS Studio" input ports you just created . Connect OBS's monitor outputs to your speakers to hear the mix.
+
+##### macOS: Using BlackHole
+> For macOS, the approach is similar to Windows, using a virtual audio driver. [BlackHole](https://existential.audio/blackhole/) is a modern, open-source option. The principle is the same: route Mixxx's output to BlackHole, and set that as OBS's "Desktop Audio" device.  
+
+##### Final Configuration and Recording
+> Before you record, fine-tune a few settings:  
+Run the Auto-Configuration Wizard: OBS has a built-in wizard (Tools -> Auto-Configuration Wizard) to optimize settings for recording or streaming, which is a good starting point.  
+Start Recording: Once everything is set up, click "Start Recording" in the Controls panel. Play your set in Mixxx.  
+Stop Recording: Click "Stop Recording" when you're finished. Your video file will be saved to the location specified in Settings -> Output.
 
 
-**Enjoy Mixxx and DJ your way!**
+### How to upload a video to YouTube.
+
+A video that clearly explains how to upload your recorded Mixxx DJ session.  
+* Kevin Stratvert made [a tutorial video](https://www.youtube.com/watch?v=VtF2AgFSLAw)
+
+#### A short manual for uploading your recorded Mixxx DJ session to YouTube as unlisted.  
+##### Access the Upload Page
+> Sign in to your YouTube account.  
+In the top right corner, click the "Create" button (the video camera icon with a plus sign) and select "Upload videos" from the dropdown menu .
+
+##### Select Your Video File
+>You will now be on the upload screen.  
+Here you can:  
+    - Drag and drop your video file directly into the window .
+    - Or click the "Select File" button to browse and choose your recording from your computer .
+The upload will begin as soon as you've selected your file.
+
+##### Enter Video Details
+> While your video is uploading and processing, you can fill in the details on the left-hand side of the screen:  
+    - Title: Give your DJ set a clear name (e.g., "My Mixxx DJ Set for the Intergalactic DJ Contest, 2026").
+    - Not needed:  Description
+    - Not needed: Thumbnail
+    - Not needed: Playlist
+Proceed through the screens by clicking "Next" in the bottom right corner, providing basic info like whether the video is "Made for Kids" -> select "No, it's not made for kids" for a DJ mix.
+
+##### Set Your Privacy to Private or Unlisted  
+> The final screen is the "Visibility" or "Privacy" section. This is where you control who can see your video.  
+Choose Unlisted.  
+What it means: Anyone who has the direct link to the video can watch it. The video will not appear in YouTube search results, on your channel's Videos tab, or in recommendations.  
+
+##### Publish Your Video  
+> Once you've selected your privacy setting, click the "Save" or "Publish" button in the bottom right corner . YouTube will finish processing your video.
+
+##### Getting the Link to Share (for Unlisted Videos)  
+> After publishing, you can copy the shareable link directly from the upload completion screen.  
+Alternatively, you can find the link later from your YouTube Studio -> Content page. Hover over the video, click the three dots (or the visibility icon), and select the option to copy the link .
+This is the link you need to send to Mixxx.
