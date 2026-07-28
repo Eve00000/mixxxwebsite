@@ -48,7 +48,7 @@
   {% if article.authors %}
   <div class="docs-section author-box">
     {% for author in article.authors %}
-      {{ utils.author_box(author) }}
+      {{ utils.author_box(author, siteurl=SITEURL) }}
     {% endfor %}
   </div>
   {% endif %}

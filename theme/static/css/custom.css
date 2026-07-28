@@ -57,7 +57,7 @@ html.transition-theme *:after {
     max-width: 384px;
     height: auto;
     float: right;
-    shape-outside: url('/theme/images/ev/umbrella.png');
+    shape-outside: url('../images/ev/umbrella.png');
     shape-margin: 2rem;
     margin-left: 2rem;
     margin-top: 60px;
