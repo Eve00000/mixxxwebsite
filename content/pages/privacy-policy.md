@@ -12,7 +12,8 @@ For privacy policies and conformance to GDPR, a few distinctions will be made be
 
 1. Mixxx application
 2. Main Mixxx website
-3. Community Mixxx websites
+3. Mixxx Shop website
+4. Community Mixxx websites
 
 ## 1. Mixxx Application
 
@@ -81,8 +82,11 @@ please refer to those platforms for information about the privacy policies.
 The main website of Mixxx, which can be accessed via the `mixxx.org` domain, does not create or use any user account. The Mixxx main page does not use cookies or similar tracking methods.
 Therefore, no personal information is stored at any moment by Mixxx.
 
+## 3. Mixxx Shop Website
 
-## 3. Mixxx Community Websites
+The Mixxx Shop website, which can be accessed via the `shop.mixxx.org` domain, has a separate privacy policy you find here: [Mixxx Shop Privacy Policy](https://shop.mixxx.org/content/7-privacy-policy)
+
+## 4. Mixxx Community Websites
 
 The Mixxx community websites are related to development and community, and are the following:
 
