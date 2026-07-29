@@ -14,8 +14,8 @@ jobs:
     uses: ./.github/workflows/ovh.yaml
     with:
       environment_name: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'production' || format('pull/{0}', github.event.pull_request.number) }}
-      url: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'production' && format('https://{0}', vars.MAIN_WEBSITE) || format('https://{0}/pr/{1}', vars.PREVIEW_WEBSITE, github.event.pull_request.number) }}
-      target: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'production' && 'www' || format('pulls/pr/{0}', github.event.pull_request.number) }}
+      url: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && format('https://{0}', vars.MAIN_WEBSITE) || format('https://{0}/pr/{1}', vars.PREVIEW_WEBSITE, github.event.pull_request.number) }}
+      target: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'www' || format('pulls/pr/{0}', github.event.pull_request.number) }}
       action: deploy
     secrets: inherit
 
