@@ -174,7 +174,7 @@ NAV_MENU = (
             ),
             MenuItem(
                 "https://shop.mixxx.org",
-                "Shop",
+                "25<sup>th</sup> Anniversary Shop",
                 "Navigation bar link to our shop.",
             ),
         ),
