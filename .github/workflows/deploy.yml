@@ -13,15 +13,15 @@ jobs:
     if: github.event_name == 'push' || (github.event.action != 'closed' && github.event.action != 'labeled')
     uses: ./.github/workflows/ovh.yaml
     with:
-      environment_name: ${{ github.event_name == 'push' && 'production' || format('pull/{0}', github.event.pull_request.number) }}
-      url: ${{ github.event_name == 'pull_request' && format('https://{0}/pr/{1}', vars.PREVIEW_WEBSITE, github.event.pull_request.number) || format('https://{0}', vars.MAIN_WEBSITE) }}
-      target: ${{ github.event_name == 'pull_request' && format('pulls/pr/{0}', github.event.pull_request.number) || 'www' }}
+      environment_name: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'production' || format('pull/{0}', github.event.pull_request.number) }}
+      url: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'production' && format('https://{0}', vars.MAIN_WEBSITE) || format('https://{0}/pr/{1}', vars.PREVIEW_WEBSITE, github.event.pull_request.number) }}
+      target: ${{ contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) && 'production' && 'www' || format('pulls/pr/{0}', github.event.pull_request.number) }}
       action: deploy
     secrets: inherit
 
   cleanup:
     if: |
-      github.event_name == 'pull_request' && (github.event.action == 'closed' || contains(github.event.pull_request.labels.*.name, 'stale'))
+      github.event_name == 'pull_request_target' && (github.event.action == 'closed' || contains(github.event.pull_request.labels.*.name, 'stale'))
     uses: ./.github/workflows/ovh.yaml
     with:
       environment_name: ${{ format('pull/{0}', github.event.pull_request.number) }}
