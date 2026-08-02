@@ -50,7 +50,7 @@ versions:
 
               sudo pacman -S mixxx
       - slug: flatpak
-        os: Flatpak (any Linux distribution)
+        os: Flatpak from Flathub (currently unmaintained)
         text: |
           Mixxx is available for all Linux distributions as a Flatpak from Flathub. Refer to the [Flathub setup instructions](https://flathub.org/setup) for your distribution if you have not installed a Flatpak from Flathub before. Then, install the Mixxx Flatpak by running:
 
@@ -86,7 +86,7 @@ versions:
   beta:
     name: 2.6-beta
     release_announcement: /news/2025-05-11-mixxx-2_6_beta-released
-    title: Beta Snapshots (2.6)
+    title: Mixxx 2.6 (Beta snapshots)
     text: |
       A great way to contribute to Mixxx is testing the upcoming version before it is being released.
       The Mixxx team relies on a significant number of users switching to the beta version and using it at home.
@@ -120,6 +120,25 @@ versions:
               $ sudo apt install mixxx
 
           Using the PPA ensures that new package versions will be installed automatically with `apt`. Otherwise, you can [download individual packages](https://launchpad.net/~mixxx/+archive/ubuntu/mixxxbetas/+packages) and install them manually.
+      - slug: flatpak
+        os: Flatpak (any Linux distribution)
+        text: |
+          The beta version of Mixxx is available for all Linux distributions as a Flatpak from the official Mixxx Flatpak repository.
+          Add the repository by running:
+
+              flatpak remote-add --if-not-exists mixxx https://downloads.mixxx.org/flatpak/repo.flatpakrepo
+
+          Then, install the beta version Flatpak like this:
+
+              flatpak install mixxx org.mixxx.Mixxx//beta
+
+          To run the beta version Flatpak:
+
+              flatpak run org.mixxx.Mixxx//beta
+
+          **Note:** When migrating from a distribution package or Mixxx built from source code, Mixxx Flatpak will not automatically recover your previous settings and database. Please refer to the [instructions in the manual](https://manual.mixxx.org/latest/chapters/advanced_topics#migrate-your-mixxx-library-and-settings-to-flatpak).
+
+          If you encounter issues with file or device permissions, please refer to the [Mixxx Flatpak repository](https://github.com/flathub/org.mixxx.Mixxx/issues) first.
       - slug: source
         name: Source Code
         icon: terminal.svg
@@ -137,7 +156,7 @@ versions:
           file_url: https://github.com/mixxxdj/mixxx/archive/2.6.zip
   testing:
     name: 2.7-alpha
-    title: Development Snapshots
+    title: Mixxx 2.7 (Development snapshots)
     text: |
       If you're bored of thoroughly testing the beta snapshots, you can also test the current development snapshot to get a glimpse at the even newer features.
       As for the beta snapshots, please refer to the [Testing wiki page](https://github.com/mixxxdj/mixxx/wiki/Testing) for where to find the latest builds and instructions how to test pull requests before they even reach this alpha.
