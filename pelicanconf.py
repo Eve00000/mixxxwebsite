@@ -85,6 +85,7 @@ PLUGIN_PATHS = [
 ]
 
 PLUGINS = [
+    "auto_siteurl",
     "author_metadata",
     "download_metadata",
     "draft_override",

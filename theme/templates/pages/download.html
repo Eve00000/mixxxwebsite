@@ -82,7 +82,7 @@
 
   {% if version_status == "unstable" %}
   {% with release_announcement=version.release_announcement %}
-  <p>{% trans %}The Mixxx team has been working hard on the next version of Mixxx. Check out the <a href="{{ release_announcement }}">release announcement</a> for a list of the new features.{% endtrans %}</p>
+  <p>{% trans %}The Mixxx team has been working hard on the next version of Mixxx. Check out the <a href="{{ SITEURL }}{{ release_announcement }}">release announcement</a> for a list of the new features.{% endtrans %}</p>
   {% endwith %}
   <p>
     {% with version_name=version.name, stable_link="#stable" %}
@@ -99,7 +99,7 @@
 
     {% if version.release_announcement %}
     {% with release_announcement=version.release_announcement %}
-    {% trans %}If you're upgrading from an older version of Mixxx, check out the <a href="{{ release_announcement }}">release announcement</a> for a list of the new features.{% endtrans %}
+    {% trans %}If you're upgrading from an older version of Mixxx, check out the <a href="{{ SITEURL }}{{ release_announcement }}">release announcement</a> for a list of the new features.{% endtrans %}
     {% endwith %}
     {% endif %}
   </p>
