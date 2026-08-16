@@ -1,8 +1,8 @@
 title: "Mixxx 25<sup>th</sup> Anniversary Artist T-Shirts"
 authors: Daniel Schürmann
 tags: merch, t-shirt, art, designer
-status: draft
 comments: yes
+date: 2026-08-16 19:35:56
 
 This year we celebrate the 25<sup>th</sup> anniversary of Mixxx. Musicians, designers, and developers have worked together to build software for digital DJing that holds its own against commercial alternatives. We all believe that professional DJ software should be free for everyone.
 
