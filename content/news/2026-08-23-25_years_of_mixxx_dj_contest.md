@@ -11,7 +11,7 @@ To celebrate the 25th anniversary of [Mixxx](https://mixxx.org) and its communit
 Everyone who loves music and DJing, whether you DJ for yourself, for friends and family or in public, whether you are a bedroom DJ, a tango DJ, a wedding DJ, a club DJ, or a Famous DJ playing on big events, whether you're a beginner or already experienced — everyone is invited to join.  
 Music is about emotions, DJing is about evoking emotions in others: with music you can make others happy, cheerful, enthusiastic or excited, but you can also make others melancholic, sad, or withdrawn.  
 
-If you prefer to share a 'Happy-Anniversary-Mixxx'-mix without participating in the DJ Contest or you want to share Anniversary-wishes, please do on the [forum](https://mixxx.discourse.group/), we will open a channel/topic there for the occasion.
+If you would rather share a ‘Happy 25th Anniversary Mixxx’-mix without participating in the DJ contest, or if you simply want to share anniversary wishes… please do so in the [Happy 25th Anniversary Mixxx](https://mixxx.discourse.group/t/happy-25th-anniversary-mixxx/34142)-topic on our forum.
 
 Take the audience along, DJ your way and entertain us.
 
