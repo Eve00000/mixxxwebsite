@@ -1,8 +1,8 @@
 title: 25 Years of Mixxx Intergalactic DJ Contest
 authors: Evelynne Veys
-status: draft
 tags: 25 years of Mixxx, Intergalactic DJ Contest
 comments: yes
+date: 2026-08-23 01:01:23
 
 
 To celebrate the 25th anniversary of [Mixxx](https://mixxx.org) and its community, we want to organize an event where everyone can show how they use Mixxx, what tricks Mixxx makes possible, to demonstrate that Mixxx is designed to 'DJ your way' and how much fun we have with it.
