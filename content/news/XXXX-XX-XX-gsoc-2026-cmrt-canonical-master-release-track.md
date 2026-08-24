@@ -18,7 +18,7 @@ summary: The solution is to use the complete Chromaprint fingerprint — the ful
 
 ---
 
-Hello Everyone! I am Swarnadip Kar, a 4th-year Computer Science undergraduate at IIT Bhilai. 
+Hello Everyone! I am Swarnadip Kar, a 4th-year Computer Science undergraduate at IIT Bhilai.
 I joined the Mixxx community in February 2026. Through this post I want to share my GSoC 2026 project with the community: **Canonical Master Release Track (CMRT) based on the Complete Chromaprint Fingerprint**.
 
 ---
@@ -43,7 +43,7 @@ A recording is not equal to a mastering. Each mastering may differ in loudness, 
 
 The solution is to use the *complete* Chromaprint fingerprint — the full duration, not just the first two minutes — as an identifier for a specific mastering. Two copies of a track with identical complete fingerprints are provably the same mastering. From there the pregap offset between any two masterings can be calculated, and eventually this information can be shared through MusicBrainz so DJs worldwide can retrieve timing metadata that is guaranteed to match their specific version of a track.
 
-Once we can identify tracks as being the same mastering, we can choose one version as the **Canonical Master Release Track (CMRT)** — the highest quality version of that mastering available. In the scope of this project (a DJ's local collection), the CMRT is simply the highest-quality file for a given mastering. For example, if a DJ has both a 128 kbps MP3 and a FLAC of the same mastering, the FLAC is the local CMRT. The offset of all other tracks of the same mastering needs to be calculated relative to this CMRT.
+Once we can identify tracks as being the same mastering, we can choose one version as the **Canonical Master Release Track (CMRT)** — the highest quality version of that mastering available. In the scope of this project (a DJ's local collection), the CMRT is simply the highest-quality file for a given mastering. For example, if a DJ has both a 128 kbps MP3 (lossy) and a FLAC (real lossless) of the same mastering, the FLAC is the local CMRT. The offset of all other tracks of the same mastering needs to be calculated relative to this CMRT.
 
 In a broader scope (across all users contributing to MusicBrainz), the CMRT would be the highest-quality version of each mastering that has been fingerprinted and registered — the data of highest quality available across the collections of all DJs, stored in the MBDB. This larger-scope CMRT subclustering is the separate MusicBrainz project mentioned above.
 
@@ -55,7 +55,7 @@ This project builds the entire Mixxx-side foundation: database schema, fingerpri
 
 ## Check Out the Demo Video
 
-@Video(https://www.youtube.com/watch?v=s_Cm_eHa4Vk)
+@Video(https://www.youtube.com/watch?v=_4_aqP8UjbM)
 (Video Credits: [@Eve00000](https://github.com/Eve00000))
 
 ---
