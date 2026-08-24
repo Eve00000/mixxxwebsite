@@ -1,9 +1,9 @@
 title: "GSoC 2026: Canonical Master Release Track (CMRT) based on the Complete Chromaprint Fingerprint"
 authors: Swarnadip Kar (Swarnadip-Kar)
-status: draft
 tags: gsoc, gsoc-2026, development, CMRT, fingerprinting, MusicBrainz
 comments: yes
 summary: The solution is to use the complete Chromaprint fingerprint, the full duration, not just the first two minutes, as an identifier for a specific mastering.
+date: 2026-08-24 18:14:59
 
 **Organization:** Mixxx  
 **Applicant:** Swarnadip Kar  
