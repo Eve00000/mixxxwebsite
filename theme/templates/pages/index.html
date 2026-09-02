@@ -4,6 +4,110 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pages/index.css">
+<style>
+    /* Banner rotation styles - integrates with existing splash design */
+    .banner-rotation-container {
+        position: relative;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease;
+        cursor: pointer;
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    .banner-rotation-container .banner-content {
+        transition: opacity 0.4s ease;
+        width: 100%;
+        text-align: center;
+    }
+
+    .banner-rotation-container .banner-text {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #f0f0ff;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        white-space: pre-line;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-rotation-container .banner-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .banner-rotation-container .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        display: inline-block;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .banner-rotation-container .dot.active {
+        background: #f7b731;
+        transform: scale(1.3);
+        box-shadow: 0 0 10px rgba(247, 183, 49, 0.4);
+    }
+
+    .banner-rotation-container .banner-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        width: 100%;
+    }
+
+    /* Social icons visibility toggle */
+    .splash-social {
+        transition: opacity 0.4s ease, visibility 0.4s ease, height 0.4s ease;
+        opacity: 1;
+        visibility: visible;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .splash-social.hidden {
+        opacity: 0;
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 640px) {
+        .banner-rotation-container .banner-text {
+            font-size: 1rem;
+            padding: 8px 12px;
+        }
+        .banner-rotation-container {
+            min-height: 60px;
+        }
+        .banner-rotation-container .banner-dots {
+            gap: 6px;
+        }
+        .banner-rotation-container .dot {
+            width: 6px;
+            height: 6px;
+        }
+        .splash-social {
+            width: 10em;
+        }
+        .splash-social img {
+            height: 1.2em;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block header %}
@@ -11,9 +115,18 @@
   <div class="container">
     <img class="splash-logo drop-shadow" src="{{ SITEURL }}/theme/images/mixxx-logo.svg" alt="Mixxx Logo">
     <div class="splash-text">
-      <h2>{% trans %}DJ Your Way{% endtrans %}</h2>
-      <p>Free and open source DJ software for Windows, macOS, and Linux</p>
-      <ul class="splash-social">
+      <!-- BANNER ROTATION -->
+      <div class="banner-rotation-container" id="bannerRotation">
+        <a href="#" class="banner-link" id="bannerLink" target="_self">
+          <div class="banner-content" id="bannerContent">
+            <!-- Dynamic content inserted by JavaScript -->
+          </div>
+        </a>
+        <div class="banner-dots" id="bannerDots"></div>
+      </div>
+
+      <!-- SOCIAL ICONS - Only visible when home banner is active -->
+      <ul class="splash-social" id="socialIcons">
         <li>
           <a rel="me" class="mastodon social_icon" href="https://floss.social/@mixxx" target="_blank">
             <img src="{{ SITEURL }}/theme/images/social_icons/mastodon.svg" alt="Mastodon" title="Follow Mixxx on Mastodon">
@@ -172,4 +285,187 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    (function() {
+        "use strict";
+
+        // BANNER DEFINITIONS (HomeBanner comes first)
+        const banners = [
+            {
+                type: 'text',
+                text: 'DJ Your Way\nFree and open source DJ software for Windows, macOS, and Linux',
+                url: '{{ SITEURL }}/',
+                target: '_self'
+            },
+            {
+                type: 'text',
+                text: 'New stable release: version 2.5.6',
+                url: 'https://mixxx.org/download/',
+                target: '_self'
+            },
+            {
+                type: 'text',
+                text: '25th Anniversary T-Shirts available\norder your T-Shirt now',
+                url: 'https://shop.mixxx.org',
+                target: '_blank'
+            },
+            {
+                type: 'text',
+                text: '25th Anniversary Intergalactic DJ Contest\nSubmit your video before September 30th',
+                url: 'https://mixxx.org/news/2026-08-23-25_years_of_mixxx_dj_contest/',
+                target: '_blank'
+            }
+        ];
+
+        // DOM elements
+        const bannerContent = document.getElementById('bannerContent');
+        const bannerLink = document.getElementById('bannerLink');
+        const dotsContainer = document.getElementById('bannerDots');
+        const bannerContainer = document.getElementById('bannerRotation');
+        const socialIcons = document.getElementById('socialIcons');
+
+        // State
+        let currentIndex = 0;
+        let stepCounter = 0;
+        let intervalId = null;
+        let isPaused = false;
+
+        // Create dots
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            banners.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (index === 0 ? ' active' : '');
+                dot.dataset.index = index;
+                dot.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const idx = parseInt(this.dataset.index);
+                    if (idx !== currentIndex) {
+                        goToBanner(idx);
+                    }
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Update banner display and social icons visibility
+        function updateBanner(index) {
+            const banner = banners[index];
+
+            // Clear previous content
+            bannerContent.innerHTML = '';
+
+            // Create text element with line breaks
+            const textDiv = document.createElement('div');
+            textDiv.className = 'banner-text';
+
+            const lines = banner.text.split('\n');
+            lines.forEach((line, i) => {
+                if (i > 0) {
+                    textDiv.appendChild(document.createElement('br'));
+                }
+                textDiv.appendChild(document.createTextNode(line));
+            });
+
+            bannerContent.appendChild(textDiv);
+
+            // Update link
+            bannerLink.href = banner.url;
+            bannerLink.target = banner.target || '_self';
+
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            // SHOW/HIDE SocialIcons
+            // Only show social icons on HomeBanner (index 0)
+            if (index === 0) {
+                socialIcons.style.display = 'flex';
+                socialIcons.style.opacity = '1';
+                socialIcons.style.visibility = 'visible';
+            } else {
+                socialIcons.style.display = 'none';
+                socialIcons.style.opacity = '0';
+                socialIcons.style.visibility = 'hidden';
+            }
+
+            currentIndex = index;
+        }
+
+        // next banner (HomeBanner comes first)
+        function getNextBanner() {
+            if (stepCounter % 2 === 0) {
+                const bannerNumber = Math.floor(stepCounter / 2) + 1;
+                return (bannerNumber % (banners.length - 1)) + 1;
+            }
+            return 0;
+        }
+
+        // Advance to next banner
+        function nextBanner() {
+            const nextIndex = getNextBanner();
+            updateBanner(nextIndex);
+            stepCounter = (stepCounter + 1) % (2 * (banners.length - 1));
+        }
+
+        // Jump to specific banner
+        function goToBanner(index) {
+            updateBanner(index);
+
+            if (index === 0) {
+                stepCounter = 0;
+            } else {
+                stepCounter = (index - 1) * 2 + 1;
+            }
+
+            stopRotation();
+            if (!isPaused) startRotation();
+        }
+
+        // Start/stop rotation
+        function startRotation(intervalMs = 5000) {
+            if (intervalId) clearInterval(intervalId);
+            intervalId = setInterval(nextBanner, intervalMs);
+        }
+
+        function stopRotation() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }
+
+        // Initialize
+        createDots();
+        updateBanner(0); // Start with HomeBanner - SocialIcons visible
+        stepCounter = 0;
+        startRotation(5000);
+
+        // Pause on hover
+        bannerContainer.addEventListener('mouseenter', function() {
+            isPaused = true;
+            stopRotation();
+        });
+
+        bannerContainer.addEventListener('mouseleave', function() {
+            isPaused = false;
+            if (!intervalId) startRotation(5000);
+        });
+
+        // Handle page visibility
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopRotation();
+            } else if (!isPaused && !intervalId) {
+                startRotation(5000);
+            }
+        });
+
+        console.log('✅ Mixxx banner rotation active - social icons only on home banner');
+    })();
+</script>
 {% endblock %}
