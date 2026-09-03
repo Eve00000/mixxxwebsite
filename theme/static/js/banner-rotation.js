@@ -1,3 +1,6 @@
+// banner rotation with text banners trying to stay as close as possible to the original design,
+// social icons only on homebanner
+
 (function() {
     "use strict";
 
